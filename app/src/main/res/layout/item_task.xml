@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="taskItem"
+            type="com.example.taskmanager.data.entities.TaskEntitiy" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="4dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Task name"
+            android:text="@{taskItem.task}"
+            android:textSize="20sp"
+            android:id="@+id/taskNameItem"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{taskItem.priorityAsString}"
+            tools:text="@string/priority_task"
+            android:id="@+id/priorityItem"
+            android:textSize="12sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="date"
+            android:text="@{taskItem.time}"
+            android:textSize="12sp"
+            android:id="@+id/timeItem"
+            />
+
+
+    </LinearLayout>
+</layout>
