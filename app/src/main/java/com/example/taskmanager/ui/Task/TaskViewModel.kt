@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.taskmanager.domain.repo.TaskRepository
-import com.example.taskmanager.utils.taskList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -15,16 +14,16 @@ class TaskViewModel(
 ) : ViewModel() {
 
     init {
-        insertTasksInDb()
+//        insertTasksInDb()
     }
-
     private val showCompleted = MutableStateFlow(false)
     private val showPriority = MutableStateFlow(false)
     private val showDeadline = MutableStateFlow(false)
 
-    val tasks = combine(showCompleted,showPriority,showDeadline){showCompleted ,showPriority,showDeadline->
-//        taskList.filter {it.completed == showCompleted}.map { it }
-        //taskRepository.getTasks(showCompleted[0])
+ /*
+ * val tasks = combine(showCompleted,showPriority,showDeadline){showCompleted ,showPriority,showDeadline->
+        taskList.filter {it.completed == showCompleted}.map { it }
+        taskRepository.getTasks(showCompleted[0])
         when{
             showDeadline && showPriority ->taskRepository.getCompletedPriorityDeadlineTask(showCompleted=showCompleted)
             showDeadline -> taskRepository.getDeadlineSort(showCompleted)
@@ -32,12 +31,14 @@ class TaskViewModel(
             else -> taskRepository.getTasks(showCompleted)
         }
     }
+ *
+ * */
 
     private fun insertTasksInDb() {
         viewModelScope.launch {
-            for (taskEntity in taskList) {
+ /*           for (taskEntity in taskList) {
                 taskRepository.insertTask(taskEntity)
-            }
+            }*/
         }
     }
 

@@ -6,4 +6,6 @@
     <string name="priority_task">Sort by Priority</string>
     <string name="deadlinetask">Sort by Deadline</string>
     <string name="date">date</string>
+    <string name="title">Title</string>
+    <string name="task">Task</string>
 </resources>

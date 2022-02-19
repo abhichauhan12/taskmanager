@@ -4,28 +4,19 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.taskmanager.data.entities.TaskEntitiy
+import com.example.taskmanager.data.entities.Task
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TaskDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertTask (task : TaskEntitiy)
+    suspend fun insertTask (task : Task)
 
-    @Query("select * from tasksDetails  ")
-    fun getAllTask() : Flow<List<TaskEntitiy>>
+    @Query("SELECT * FROM tasks_table")
+    fun getAllTasks() : Flow<List<Task>>
 
-    @Query("select * from tasksDetails where Completed=:completed ")
-    suspend fun getCompletedTask(completed : Boolean = true) : List<TaskEntitiy>
-
-    @Query("select * from tasksDetails where Completed=:completed order by priority asc")
-    suspend fun getPriorityInc(completed : Boolean = true) : List<TaskEntitiy>
-
-    @Query("select * from tasksDetails where Completed=:completed order by date asc")
-    suspend fun getDeadlineSort(completed : Boolean = true) : List<TaskEntitiy>
-
-    @Query("select * from tasksDetails where Completed=:completed order by date asc, priority asc ")
-    suspend fun getCompletedPriorityDeadlineTask(completed : Boolean = true): List<TaskEntitiy>
+    /*@Query("DELETE FROM tasks_table WHERE task=:task")
+    suspend fun deleteTask(task: Task)*/
 
 }

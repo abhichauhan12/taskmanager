@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.Task.Task">
+        tools:context=".ui.Task.TaskFragmnet">
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"
@@ -52,6 +52,17 @@
                 android:layout_marginTop="8dp"
                 />
         </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/black"
+            android:src="@drawable/ic_add"
+            android:id="@+id/add_task"
+            />
 
 
 

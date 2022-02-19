@@ -5,21 +5,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.taskmanager.data.entities.TaskEntitiy
+import com.example.taskmanager.data.entities.Task
 import com.example.taskmanager.databinding.ItemTaskBinding
 
 
 class TaskAdapter(
     private val inflater: LayoutInflater
 
-) : ListAdapter<TaskEntitiy,TaskAdapter.TaskViewHolder >(DiffUtilCallback){
+) : ListAdapter<Task,TaskAdapter.TaskViewHolder >(DiffUtilCallback){
 
-    object DiffUtilCallback : DiffUtil.ItemCallback<TaskEntitiy>() {
-        override fun areItemsTheSame(oldItem: TaskEntitiy, newItem: TaskEntitiy): Boolean {
-            return oldItem.task == newItem.task
+    object DiffUtilCallback : DiffUtil.ItemCallback<Task>() {
+        override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
+            return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: TaskEntitiy, newItem: TaskEntitiy): Boolean {
+        override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
             return oldItem == newItem
         }
 
@@ -29,8 +29,8 @@ class TaskAdapter(
         private val binding: ItemTaskBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(task : TaskEntitiy) {
-            binding.taskItem = task
+        fun bind(task : Task) {
+            binding.taskItems = task
             binding.executePendingBindings()
         }
     }
