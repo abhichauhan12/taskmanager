@@ -3,12 +3,14 @@ package com.example.taskmanager.ui.Task
 import TaskViewModel
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.taskmanager.R
+import com.example.taskmanager.data.entities.Task
 import com.example.taskmanager.databinding.FragmentTaskBinding
 import com.example.taskmanager.domain.repo.TaskRepository
 import kotlinx.coroutines.flow.collect
@@ -21,7 +23,15 @@ class TaskFragmnet :Fragment(R.layout.fragment_task){
     private lateinit var taskViewModel: TaskViewModel
     private val taskAdapter: TaskAdapter by lazy {
        TaskAdapter(
-            inflater = layoutInflater
+            inflater = layoutInflater,
+           onItemClick ={
+               findNavController().navigate(R.id.action_task_to_addTask, Bundle().apply {
+                   putParcelable("task",it)
+               })
+           },
+           onCheckBoxClick = {position ->
+               taskViewModel.delete(position)
+           }
        )
 
     }
@@ -31,6 +41,7 @@ class TaskFragmnet :Fragment(R.layout.fragment_task){
 
         binding= FragmentTaskBinding.bind(view)
         binding.lifecycleOwner = this
+
 
         taskViewModel=ViewModelProvider(this,
             TaskViewModel.Factor(taskRepository = TaskRepository.getInstance(requireContext())))[TaskViewModel::class.java]
@@ -58,9 +69,18 @@ class TaskFragmnet :Fragment(R.layout.fragment_task){
         binding.addTask.setOnClickListener {
             findNavController().navigate(R.id.action_task_to_addTask)
         }
+
+        lifecycleScope.launch {
+            taskViewModel.showTasks().collect{
+                if(it.isNotEmpty()){
+                    taskAdapter.submitList(it)
+                }
+            }
+        binding.deleteTask.setOnClickListener {
+            Toast.makeText(requireContext(), "delete text", Toast.LENGTH_SHORT).show()
+        }
+            }
+
+        }
+
     }
-
-
-
-
-}

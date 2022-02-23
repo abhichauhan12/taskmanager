@@ -20,9 +20,13 @@ class TaskRepository(private val database: TaskDatabase) {
 
     fun getTasks() = database.taskDao().getAllTasks()
 
-   /* suspend fun deleteTask(task: Task){
-        database.taskDao().deleteTask(task)
-    }*/
+
+    suspend fun updateTask(task: Task){
+            database.taskDao().taskUpdate(task)
+    }
+  suspend fun deleteTask(id : Int){
+        database.taskDao().deleteTask(id)
+    }
 
     suspend fun insertTask(task: Task) {
         withContext(Dispatchers.IO) {

@@ -1,10 +1,13 @@
 package com.example.taskmanager.data.entities
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.taskmanager.utils.TaskConstants
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 @Entity(tableName = "tasks_table")
 data class Task(
 
@@ -31,6 +34,9 @@ data class Task(
     val deadline : String,
 
     @ColumnInfo(name = "completed")
-    val completed : Boolean = false
+    val completed : Boolean = false,
 
-)
+    @ColumnInfo(name = "cheked")
+    val check : Boolean = false
+
+): Parcelable

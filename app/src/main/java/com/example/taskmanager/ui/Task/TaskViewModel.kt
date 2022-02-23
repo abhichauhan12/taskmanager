@@ -34,14 +34,15 @@ class TaskViewModel(
  *
  * */
 
+/*
     private fun insertTasksInDb() {
         viewModelScope.launch {
- /*           for (taskEntity in taskList) {
+           for (taskEntity in taskList) {
                 taskRepository.insertTask(taskEntity)
-            }*/
+            }
         }
     }
-
+*/
 
     fun updateShowCompleted(showCompleted : Boolean){
         this.showCompleted.value = showCompleted
@@ -52,6 +53,15 @@ class TaskViewModel(
     fun updateShowDeadline(showDeadline : Boolean){
         this.showDeadline.value = showDeadline
     }
+
+    fun showTasks()=taskRepository.getTasks()
+
+    fun delete(id : Int){
+        viewModelScope.launch {
+            taskRepository.deleteTask(id = id)
+        }
+    }
+
 
     class Factor(private val taskRepository: TaskRepository):ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

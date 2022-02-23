@@ -10,9 +10,11 @@ import com.example.taskmanager.databinding.ItemTaskBinding
 
 
 class TaskAdapter(
-    private val inflater: LayoutInflater
+    private val inflater: LayoutInflater,
+    private val onItemClick :(Task) -> Unit,
+    private val onCheckBoxClick:(Int) -> Unit
 
-) : ListAdapter<Task,TaskAdapter.TaskViewHolder >(DiffUtilCallback){
+) : ListAdapter<Task,TaskAdapter.TaskViewHolder >(DiffUtilCallback) {
 
     object DiffUtilCallback : DiffUtil.ItemCallback<Task>() {
         override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
@@ -25,15 +27,24 @@ class TaskAdapter(
 
     }
 
-    class TaskViewHolder(
-        private val binding: ItemTaskBinding
+    inner class TaskViewHolder(
+        val binding: ItemTaskBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(task : Task) {
+        fun bind(task: Task) {
             binding.taskItems = task
             binding.executePendingBindings()
         }
+
+        init {
+            binding.itemContainer.setOnClickListener {
+                val task: Task = binding.taskItems!!
+                onItemClick(task)
+            }
+        }
+
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         return TaskViewHolder(ItemTaskBinding.inflate(inflater, parent, false))
@@ -41,7 +52,16 @@ class TaskAdapter(
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = getItem(position)
-        holder.bind(task =task)
-    }
+        holder.bind(task = task)
 
+
+        holder.binding.checkbox.apply {
+            setOnClickListener {
+                onCheckBoxClick(position)
+            }
+            isChecked = task.check
+
+        }
+
+    }
 }

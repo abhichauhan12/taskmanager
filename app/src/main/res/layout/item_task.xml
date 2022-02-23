@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="taskItems"
             type="com.example.taskmanager.data.entities.Task" />
@@ -13,55 +14,42 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="4dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/checkbox"
-        android:id="@+id/linear_layout"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:id="@+id/item_container"
         >
 
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Task name"
-            android:text="@{taskItems.title}"
-            android:textSize="20sp"
             android:id="@+id/taskNameItem"
-
-            />
-        <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="@string/task"
-            android:text="@{taskItems.task}"
+            android:text="@{taskItems.title}"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/checkbox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Task name" />
+
+        <TextView
             android:id="@+id/priorityItem"
-            android:textSize="12sp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="date"
-            android:text="@{taskItems.time}"
-            android:textSize="12sp"
-            android:id="@+id/timeItem"
-            />
+            android:text="@{taskItems.task}"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintEnd_toEndOf="@id/taskNameItem"
+            app:layout_constraintStart_toStartOf="@id/taskNameItem"
+            app:layout_constraintTop_toBottomOf="@id/taskNameItem"
+            tools:text="@string/task" />
 
-
-    </LinearLayout>
         <CheckBox
+            android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/checkbox"
+            app:layout_constraintBottom_toBottomOf="@id/priorityItem"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/linear_layout"
-            app:layout_constraintBottom_toBottomOf="@id/linear_layout"
-            app:layout_constraintStart_toEndOf="@id/linear_layout"
+            app:layout_constraintTop_toTopOf="parent"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

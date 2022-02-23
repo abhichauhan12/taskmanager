@@ -23,6 +23,13 @@ class AddTaskViewModel(private val taskRepository: TaskRepository): ViewModel() 
     }*/
 
 
+
+    fun updateTask(task: Task){
+        viewModelScope.launch {
+            taskRepository.updateTask(task)
+        }
+    }
+
     class Factor(private val taskRepository: TaskRepository): ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return AddTaskViewModel(taskRepository) as T

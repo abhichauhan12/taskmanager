@@ -12,6 +12,7 @@ import com.example.taskmanager.data.entities.Task
 import com.example.taskmanager.databinding.FragmentAddTaskBinding
 import com.example.taskmanager.domain.repo.TaskRepository
 import com.example.taskmanager.utils.TaskConstants
+import com.example.taskmanager.utils.getFormattedTime
 
 class AddTask : Fragment(R.layout.fragment_add_task) {
 
@@ -28,6 +29,16 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
             AddTaskViewModel.Factor(taskRepository = TaskRepository.getInstance(requireContext()))
         )[AddTaskViewModel::class.java]
 
+        val task :Task? = arguments?.getParcelable("task")
+        if (task != null){
+            binding.title.setText(task.title)
+            binding.task.setText(task.task)
+            binding.time.setText(getFormattedTime(if(task.time.isNotBlank()) task.time.toLong() else 0))
+            binding.priority.value = task.priority.toFloat()
+        }else{
+            binding.time.setText(getFormattedTime(System.currentTimeMillis()))
+        }
+
         binding.saveButton.setOnClickListener {
             saveDataAndGoback()
         }
@@ -36,29 +47,48 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
             Toast.makeText(requireContext(), "backbutton press", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_addTask_to_task)
         }
-
-
     }
 
     private fun saveDataAndGoback() {
-        val tasktext = binding.task.text.toString()
-        if (tasktext.isNotBlank()) {
-            val task = Task(
-                id = TaskConstants.randomInt,
-                title = binding.title.text.toString(),
-                task = binding.task.text.toString(),
-                priority = TaskConstants.PRIORITY_DEFAULT,
-                taskColor = TaskConstants.COLOR_DEFAULT,
-                time = TaskConstants.TIME_DEFAULT,
-                deadline = TaskConstants.DEADLINE_DEFAULT,
-                completed = false,
-            )
-            addTaskViewModel.insertTaskInDatabase(task)
-            findNavController().navigate(R.id.action_addTask_to_task)
+        val taskTitle = binding.title.text.toString()
+        val taskSubtitle = binding.task.text.toString()
+        val task :Task? = arguments?.getParcelable("task")
 
 
+
+
+        if (taskTitle.isNotBlank() && taskSubtitle.isNotBlank()){
+            if (task == null){
+                val newTask = Task(
+                    title = binding.title.text.toString(),
+                    task = binding.task.text.toString(),
+                    priority = binding.priority.value.toInt(),
+                    taskColor = TaskConstants.COLOR_DEFAULT,
+                    time = System.currentTimeMillis().toString(),
+                    deadline = TaskConstants.DEADLINE_DEFAULT,
+                    completed = false
+                )
+
+                addTaskViewModel.insertTaskInDatabase(newTask)
+                findNavController().navigate(R.id.action_addTask_to_task)
+
+            }else{
+                val updatedTask = Task(
+                    id= task.id,
+                    title = binding.title.text.toString(),
+                    task = binding.task.text.toString(),
+                    priority = binding.priority.value.toInt(),
+                    taskColor = task.taskColor,
+                    time = task.time,
+                    deadline = task.deadline,
+                    completed = task.completed
+                )
+                addTaskViewModel.updateTask(updatedTask)
+                findNavController().navigate(R.id.action_addTask_to_task)
+            }
+        }else{
+            Toast.makeText(requireContext(), "Title and Task can not be empty ", Toast.LENGTH_SHORT).show()
         }
-
     }
 
 
