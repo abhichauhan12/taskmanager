@@ -19,5 +19,17 @@ interface TaskDao {
     @Query("DELETE FROM tasks_table WHERE id=:id ")
     suspend fun deleteTask(id : Int)
 
+    @Query("select * from tasks_table where Completed=:completed ")
+    suspend fun getCompletedTask(completed : Boolean = true) : List<Task>
+
+    @Query("select * from tasks_table where Completed=:completed order by priority asc")
+    suspend fun getPriorityInc(completed : Boolean = true) : List<Task>
+
+    @Query("select * from tasks_table where Completed=:completed order by time_added asc")
+    suspend fun getDeadlineSort(completed : Boolean = true) : List<Task>
+
+    @Query("select * from tasks_table where Completed=:completed order by time_added asc, priority asc ")
+    suspend fun getCompletedPriorityDeadlineTask(completed : Boolean = true): List<Task>
+
 
 }

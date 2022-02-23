@@ -20,10 +20,8 @@ class TaskViewModel(
     private val showPriority = MutableStateFlow(false)
     private val showDeadline = MutableStateFlow(false)
 
- /*
- * val tasks = combine(showCompleted,showPriority,showDeadline){showCompleted ,showPriority,showDeadline->
-        taskList.filter {it.completed == showCompleted}.map { it }
-        taskRepository.getTasks(showCompleted[0])
+
+  val tasks = combine(showCompleted,showPriority,showDeadline){showCompleted ,showPriority,showDeadline->
         when{
             showDeadline && showPriority ->taskRepository.getCompletedPriorityDeadlineTask(showCompleted=showCompleted)
             showDeadline -> taskRepository.getDeadlineSort(showCompleted)
@@ -31,8 +29,7 @@ class TaskViewModel(
             else -> taskRepository.getTasks(showCompleted)
         }
     }
- *
- * */
+
 
 /*
     private fun insertTasksInDb() {

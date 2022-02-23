@@ -16,35 +16,37 @@ import com.example.taskmanager.domain.repo.TaskRepository
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class TaskFragmnet :Fragment(R.layout.fragment_task){
+class TaskFragmnet : Fragment(R.layout.fragment_task) {
 
 
     private lateinit var binding: FragmentTaskBinding
     private lateinit var taskViewModel: TaskViewModel
     private val taskAdapter: TaskAdapter by lazy {
-       TaskAdapter(
+        TaskAdapter(
             inflater = layoutInflater,
-           onItemClick ={
-               findNavController().navigate(R.id.action_task_to_addTask, Bundle().apply {
-                   putParcelable("task",it)
-               })
-           },
-           onCheckBoxClick = {position ->
-               taskViewModel.delete(position)
-           }
-       )
+            onItemClick = {
+                findNavController().navigate(R.id.action_task_to_addTask, Bundle().apply {
+                    putParcelable("task", it)
+                })
+            },
+            onCheckBoxClick = { position ->
+                taskViewModel.delete(position)
+            }
+        )
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding= FragmentTaskBinding.bind(view)
+        binding = FragmentTaskBinding.bind(view)
         binding.lifecycleOwner = this
 
 
-        taskViewModel=ViewModelProvider(this,
-            TaskViewModel.Factor(taskRepository = TaskRepository.getInstance(requireContext())))[TaskViewModel::class.java]
+        taskViewModel = ViewModelProvider(
+            this,
+            TaskViewModel.Factor(taskRepository = TaskRepository.getInstance(requireContext()))
+        )[TaskViewModel::class.java]
 
         binding.taskRecyclerView.apply {
             adapter = taskAdapter
@@ -71,16 +73,16 @@ class TaskFragmnet :Fragment(R.layout.fragment_task){
         }
 
         lifecycleScope.launch {
-            taskViewModel.showTasks().collect{
-                if(it.isNotEmpty()){
+            taskViewModel.showTasks().collect {
+                if (it.isNotEmpty()) {
                     taskAdapter.submitList(it)
                 }
             }
-        binding.deleteTask.setOnClickListener {
-            Toast.makeText(requireContext(), "delete text", Toast.LENGTH_SHORT).show()
-        }
+            binding.deleteTask.setOnClickListener {
+                Toast.makeText(requireContext(), "delete text", Toast.LENGTH_SHORT).show()
             }
-
         }
 
     }
+
+}

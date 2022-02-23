@@ -34,5 +34,13 @@ class TaskRepository(private val database: TaskDatabase) {
         }
     }
 
+    suspend fun getTasks(showCompleted : Boolean) =database.taskDao().getCompletedTask(showCompleted)
+
+    suspend fun getPriorityInc(showCompleted : Boolean)=database.taskDao().getPriorityInc(showCompleted)
+
+    suspend fun getDeadlineSort(showCompleted : Boolean)=database.taskDao().getDeadlineSort(showCompleted)
+
+    suspend fun getCompletedPriorityDeadlineTask(showCompleted: Boolean)=database.taskDao().getCompletedPriorityDeadlineTask(showCompleted)
+
 
 }
