@@ -8,4 +8,7 @@
     <string name="date">date</string>
     <string name="title">Title</string>
     <string name="task">Task</string>
+    <string name="color">Color</string>
+    <string name="enter_valid_color_n_00251a">Enter Valid Color\n(#00251a)</string>
+    <string name="_00251a">#00251a</string>
 </resources>

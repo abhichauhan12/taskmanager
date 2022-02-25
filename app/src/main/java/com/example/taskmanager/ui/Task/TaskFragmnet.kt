@@ -8,11 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.taskmanager.R
 import com.example.taskmanager.data.entities.Task
 import com.example.taskmanager.databinding.FragmentTaskBinding
 import com.example.taskmanager.domain.repo.TaskRepository
+import com.example.taskmanager.ui.HomeActivity
+import com.example.taskmanager.utils.TaskConstants.COLOR_DEFAULT
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -29,8 +32,8 @@ class TaskFragmnet : Fragment(R.layout.fragment_task) {
                     putParcelable("task", it)
                 })
             },
-            onCheckBoxClick = { position ->
-                taskViewModel.delete(position)
+             onItemSelected = { id ->
+                taskViewModel.updateItemToBeDeleted(id)
             }
         )
 
@@ -42,6 +45,7 @@ class TaskFragmnet : Fragment(R.layout.fragment_task) {
         binding = FragmentTaskBinding.bind(view)
         binding.lifecycleOwner = this
 
+        (activity as HomeActivity).window.statusBarColor = COLOR_DEFAULT
 
         taskViewModel = ViewModelProvider(
             this,
@@ -50,7 +54,8 @@ class TaskFragmnet : Fragment(R.layout.fragment_task) {
 
         binding.taskRecyclerView.apply {
             adapter = taskAdapter
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = GridLayoutManager(requireContext(),2)
+//            layoutManager = LinearLayoutManager(requireContext())
 
         }
 
@@ -73,14 +78,18 @@ class TaskFragmnet : Fragment(R.layout.fragment_task) {
         }
 
         lifecycleScope.launch {
-            taskViewModel.showTasks().collect {
-                if (it.isNotEmpty()) {
+            taskViewModel.tasks.collect {
                     taskAdapter.submitList(it)
+                if (it.isNullOrEmpty()){
+                    binding.emptyListText.visibility = View.VISIBLE
+                }else{
+                    binding.emptyListText.visibility = View.INVISIBLE
                 }
             }
-            binding.deleteTask.setOnClickListener {
-                Toast.makeText(requireContext(), "delete text", Toast.LENGTH_SHORT).show()
-            }
+        }
+
+        binding.deleteTask.setOnClickListener {
+            taskViewModel.delete()
         }
 
     }

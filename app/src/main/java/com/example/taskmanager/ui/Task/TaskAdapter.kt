@@ -12,7 +12,7 @@ import com.example.taskmanager.databinding.ItemTaskBinding
 class TaskAdapter(
     private val inflater: LayoutInflater,
     private val onItemClick :(Task) -> Unit,
-    private val onCheckBoxClick:(Int) -> Unit
+    private val onItemSelected:(Int) -> Unit
 
 ) : ListAdapter<Task,TaskAdapter.TaskViewHolder >(DiffUtilCallback) {
 
@@ -34,12 +34,16 @@ class TaskAdapter(
         fun bind(task: Task) {
             binding.taskItems = task
             binding.executePendingBindings()
+
         }
 
         init {
             binding.itemContainer.setOnClickListener {
                 val task: Task = binding.taskItems!!
                 onItemClick(task)
+            }
+            binding.checkbox.setOnCheckedChangeListener { compoundButton, b ->
+                onItemSelected(binding.taskItems!!.id!!)
             }
         }
 
@@ -55,13 +59,7 @@ class TaskAdapter(
         holder.bind(task = task)
 
 
-        holder.binding.checkbox.apply {
-            setOnClickListener {
-                onCheckBoxClick(position)
-            }
-            isChecked = task.check
 
-        }
 
     }
 }

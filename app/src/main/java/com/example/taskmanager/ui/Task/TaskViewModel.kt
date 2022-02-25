@@ -19,9 +19,12 @@ class TaskViewModel(
     private val showCompleted = MutableStateFlow(false)
     private val showPriority = MutableStateFlow(false)
     private val showDeadline = MutableStateFlow(false)
+    private val allTasks = taskRepository.getTasks()
+
+    private val itemToBeDeleted : HashSet<Int> = HashSet()
 
 
-  val tasks = combine(showCompleted,showPriority,showDeadline){showCompleted ,showPriority,showDeadline->
+  val tasks = combine(showCompleted,showPriority,showDeadline,allTasks){showCompleted ,showPriority,showDeadline,allTasks->
         when{
             showDeadline && showPriority ->taskRepository.getCompletedPriorityDeadlineTask(showCompleted=showCompleted)
             showDeadline -> taskRepository.getDeadlineSort(showCompleted)
@@ -53,10 +56,21 @@ class TaskViewModel(
 
     fun showTasks()=taskRepository.getTasks()
 
-    fun delete(id : Int){
+    fun delete(){
         viewModelScope.launch {
-            taskRepository.deleteTask(id = id)
+            itemToBeDeleted.forEach {
+                taskRepository.deleteTask(id = it)
+            }
         }
+    }
+
+    fun updateItemToBeDeleted(id: Int){
+        if (itemToBeDeleted.contains(id)){
+            itemToBeDeleted.remove(id)
+        }else{
+            itemToBeDeleted.add(id)
+        }
+
     }
 
 

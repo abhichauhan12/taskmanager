@@ -1,8 +1,10 @@
 package com.example.taskmanager.ui.add
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -11,8 +13,11 @@ import com.example.taskmanager.R
 import com.example.taskmanager.data.entities.Task
 import com.example.taskmanager.databinding.FragmentAddTaskBinding
 import com.example.taskmanager.domain.repo.TaskRepository
+import com.example.taskmanager.ui.HomeActivity
 import com.example.taskmanager.utils.TaskConstants
+import com.example.taskmanager.utils.TaskConstants.INVALID_COLOR
 import com.example.taskmanager.utils.getFormattedTime
+import com.example.taskmanager.utils.getParsedColor
 
 class AddTask : Fragment(R.layout.fragment_add_task) {
 
@@ -29,12 +34,22 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
             AddTaskViewModel.Factor(taskRepository = TaskRepository.getInstance(requireContext()))
         )[AddTaskViewModel::class.java]
 
+        binding.colorEdittext.addTextChangedListener {
+            val color = it?.toString()?:return@addTextChangedListener
+            val parsedColor = getParsedColor(color)
+            binding.invaildColorText.visibility = if (parsedColor == INVALID_COLOR) View.VISIBLE else View.GONE
+        }
+
         val task :Task? = arguments?.getParcelable("task")
         if (task != null){
             binding.title.setText(task.title)
             binding.task.setText(task.task)
             binding.time.setText(getFormattedTime(if(task.time.isNotBlank()) task.time.toLong() else 0))
             binding.priority.value = task.priority.toFloat()
+            binding.colorEdittext.setText("#00251a")
+            binding.addTaskContainer.setBackgroundColor(task.taskColor)
+            (activity as HomeActivity).window.statusBarColor = task.taskColor
+
         }else{
             binding.time.setText(getFormattedTime(System.currentTimeMillis()))
         }
@@ -50,12 +65,19 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
     }
 
     private fun saveDataAndGoback() {
+        val color = binding.colorEdittext.text.toString()
         val taskTitle = binding.title.text.toString()
         val taskSubtitle = binding.task.text.toString()
         val task :Task? = arguments?.getParcelable("task")
 
-
-
+        val parsedColor = getParsedColor(color)
+        if (parsedColor == INVALID_COLOR){
+            binding.invaildColorText.visibility = View.VISIBLE
+            Toast.makeText(requireContext(), "Enter Valid Color", Toast.LENGTH_SHORT).show()
+            return
+        }else{
+            binding.invaildColorText.visibility = View.GONE
+        }
 
         if (taskTitle.isNotBlank() && taskSubtitle.isNotBlank()){
             if (task == null){
@@ -63,7 +85,7 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
                     title = binding.title.text.toString(),
                     task = binding.task.text.toString(),
                     priority = binding.priority.value.toInt(),
-                    taskColor = TaskConstants.COLOR_DEFAULT,
+                    taskColor = parsedColor,
                     time = System.currentTimeMillis().toString(),
                     deadline = TaskConstants.DEADLINE_DEFAULT,
                     completed = false
@@ -78,7 +100,7 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
                     title = binding.title.text.toString(),
                     task = binding.task.text.toString(),
                     priority = binding.priority.value.toInt(),
-                    taskColor = task.taskColor,
+                    taskColor = parsedColor,
                     time = task.time,
                     deadline = task.deadline,
                     completed = task.completed
