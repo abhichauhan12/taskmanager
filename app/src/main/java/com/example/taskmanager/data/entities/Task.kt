@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.taskmanager.utils.TaskConstants
+import com.example.taskmanager.utils.getFormattedDate
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -25,7 +26,7 @@ data class Task(
     val priority : Int = TaskConstants.PRIORITY_DEFAULT,
 
     @ColumnInfo(name = "task_color")
-    val taskColor : Int = TaskConstants.COLOR_DEFAULT,
+    var taskColor : Int = TaskConstants.COLOR_DEFAULT,
 
     @ColumnInfo(name = "time_added")
     val time : String,
@@ -39,4 +40,7 @@ data class Task(
     @ColumnInfo(name = "cheked")
     val check : Boolean = false
 
-): Parcelable
+): Parcelable{
+
+    fun getDate() = getFormattedDate(time.toLong())
+}

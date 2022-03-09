@@ -19,7 +19,6 @@
         android:id="@+id/item_container"
         >
 
-
         <TextView
             android:id="@+id/taskNameItem"
             android:layout_width="0dp"
@@ -27,29 +26,48 @@
             android:text="@{taskItems.title}"
             android:textAppearance="?attr/textAppearanceCaption"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/checkbox"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Task name" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Task name"
+            />
 
         <TextView
             android:id="@+id/priorityItem"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{taskItems.task}"
-            android:textAppearance="?attr/textAppearanceBody1"
+            android:textAppearance="?attr/textAppearanceBody2"
             app:layout_constraintEnd_toEndOf="@id/taskNameItem"
             app:layout_constraintStart_toStartOf="@id/taskNameItem"
             app:layout_constraintTop_toBottomOf="@id/taskNameItem"
-            tools:text="@string/task" />
-
-        <CheckBox
-            android:id="@+id/checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/priorityItem"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@tools:sample/lorem/random"
+            android:maxLines="5"
             />
+
+        <TextView
+            android:id="@+id/deadlineitem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintEnd_toEndOf="@id/taskNameItem"
+            app:layout_constraintStart_toStartOf="@id/taskNameItem"
+            app:layout_constraintTop_toBottomOf="@id/priorityItem"
+            tools:text="1st Jan 1970"
+            android:text="@{taskItems.date}"
+            android:layout_marginTop="8dp"
+            />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_threedot"
+            app:tint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/deadlineitem"
+            android:id="@+id/menu_item"
+            android:background="?selectableItemBackgroundBorderless"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

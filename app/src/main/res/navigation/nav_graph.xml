@@ -10,6 +10,12 @@
         <action
             android:id="@+id/action_task_to_addTask"
             app:destination="@id/addTask" />
+        <action
+            android:id="@+id/action_task_to_editBottomSheet"
+            app:destination="@id/editBottomSheet" />
+        <action
+            android:id="@+id/action_task_to_menuBottomSheet"
+            app:destination="@id/menuBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/addTask"
@@ -25,5 +31,28 @@
             app:argType="com.example.taskmanager.data.entities.Task"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_addTask_to_colorBottomSheet"
+            app:destination="@id/colorBottomSheet" />
     </fragment>
+    <dialog
+        android:id="@+id/editBottomSheet"
+        android:name="com.example.taskmanager.ui.Task.EditBottomsheet.EditBottomSheet"
+        android:label="EditBottomSheet" >
+        <argument
+            android:name="task"
+            app:argType="com.example.taskmanager.data.entities.Task" />
+    </dialog>
+    <dialog
+        android:id="@+id/menuBottomSheet"
+        android:name="com.example.taskmanager.ui.Task.MenuBottomSheet"
+        android:label="MenuBottomSheet" />
+    <dialog
+        android:id="@+id/colorBottomSheet"
+        android:name="com.example.taskmanager.ui.add.ColorBottomSheet"
+        android:label="ColorBottomSheet" >
+        <argument
+            android:name="task"
+            app:argType="com.example.taskmanager.data.entities.Task" />
+    </dialog>
 </navigation>

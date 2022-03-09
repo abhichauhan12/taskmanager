@@ -22,7 +22,7 @@ interface TaskDao {
     @Query("select * from tasks_table where Completed=:completed ")
     suspend fun getCompletedTask(completed : Boolean = true) : List<Task>
 
-    @Query("select * from tasks_table where Completed=:completed order by priority asc")
+    @Query("select * from tasks_table where Completed=:completed order by priority desc")
     suspend fun getPriorityInc(completed : Boolean = true) : List<Task>
 
     @Query("select * from tasks_table where Completed=:completed order by time_added asc")
@@ -31,5 +31,11 @@ interface TaskDao {
     @Query("select * from tasks_table where Completed=:completed order by time_added asc, priority asc ")
     suspend fun getCompletedPriorityDeadlineTask(completed : Boolean = true): List<Task>
 
+
+    @Query("SELECT * from tasks_table where Completed=:completed")
+    suspend fun getNotCompletedTask(completed: Boolean = false) : List<Task>
+
+    @Query("UPDATE tasks_table SET Completed=:completed WHERE id=:id")
+    suspend fun toggleCompleted(completed: Boolean,id: Int)
 
 }
