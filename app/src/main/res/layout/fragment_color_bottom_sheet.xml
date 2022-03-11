@@ -104,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_circle"
-                    app:tint="#00251a" />
+                    app:tint="#5C0000" />
 
                 <ImageView
                     android:id="@+id/color9"
@@ -112,7 +112,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_circle"
-                    app:tint="#3E2723" />
+                    app:tint="#372F01" />
 
                 <ImageView
                     android:id="@+id/color10"
@@ -120,14 +120,14 @@
                     android:layout_marginEnd="16dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_circle"
-                    app:tint="#01579B" />
+                    app:tint="#012039" />
 
                 <ImageView
                     android:id="@+id/color11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_circle"
-                    app:tint="#880E4F"
+                    app:tint="#D50B77"
                     android:layout_marginEnd="16dp"
                     />
 
@@ -136,7 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_circle"
-                    app:tint="#B71C1C"
+                    app:tint="#168A1B"
                     android:layout_marginEnd="16dp"
                     />
 
@@ -145,7 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_circle"
-                    app:tint="#212121"
+                    app:tint="#784343"
                     android:layout_marginEnd="16dp"
                     />
 
@@ -154,7 +154,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_circle"
-                    app:tint="#000000"
+                    app:tint="#2F505A"
                     android:layout_marginEnd="16dp"
                     />
 
