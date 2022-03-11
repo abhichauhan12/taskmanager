@@ -9,13 +9,13 @@
         <entry key="..\:/Users/abhis/AndroidStudioProjects/TaskManager/app/src/main/res/drawable/ic_delete.xml" value="0.3275" />
         <entry key="..\:/Users/abhis/AndroidStudioProjects/TaskManager/app/src/main/res/drawable/squarfiled.xml" value="0.337" />
         <entry key="..\:/Users/abhis/AndroidStudioProjects/TaskManager/app/src/main/res/layout/activity_home.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/abhis/AndroidStudioProjects/TaskManager/app/src/main/res/layout/fragment_add_task.xml" value="0.5" />
+        <entry key="..\:/Users/abhis/AndroidStudioProjects/TaskManager/app/src/main/res/layout/fragment_add_task.xml" value="0.3875" />
         <entry key="..\:/Users/abhis/AndroidStudioProjects/TaskManager/app/src/main/res/layout/fragment_add_task_bottom_sheet.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/abhis/AndroidStudioProjects/TaskManager/app/src/main/res/layout/fragment_color_bottom_sheet.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/abhis/AndroidStudioProjects/TaskManager/app/src/main/res/layout/fragment_color_bottom_sheet.xml" value="0.1" />
         <entry key="..\:/Users/abhis/AndroidStudioProjects/TaskManager/app/src/main/res/layout/fragment_edit_bottom_sheet.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/abhis/AndroidStudioProjects/TaskManager/app/src/main/res/layout/fragment_menu_bottom_sheet.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/abhis/AndroidStudioProjects/TaskManager/app/src/main/res/layout/fragment_task.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/abhis/AndroidStudioProjects/TaskManager/app/src/main/res/layout/item_task.xml" value="0.5456410256410257" />
+        <entry key="..\:/Users/abhis/AndroidStudioProjects/TaskManager/app/src/main/res/layout/fragment_task.xml" value="0.4665551839464883" />
+        <entry key="..\:/Users/abhis/AndroidStudioProjects/TaskManager/app/src/main/res/layout/item_task.xml" value="0.5036101083032491" />
         <entry key="..\:/Users/abhis/AndroidStudioProjects/TaskManager/app/src/main/res/layout/item_task_recyclerview.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/abhis/AndroidStudioProjects/TaskManager/app/src/main/res/layout/layout_toolbar_general.xml" value="0.5541666666666667" />
       </map>

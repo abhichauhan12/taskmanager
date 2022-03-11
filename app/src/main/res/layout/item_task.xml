@@ -17,6 +17,7 @@
         android:paddingHorizontal="16dp"
         android:paddingVertical="8dp"
         android:id="@+id/item_container"
+        android:background="?selectableItemBackground"
         >
 
         <TextView
@@ -49,13 +50,14 @@
             android:id="@+id/deadlineitem"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceBody2"
             app:layout_constraintEnd_toEndOf="@id/taskNameItem"
             app:layout_constraintStart_toStartOf="@id/taskNameItem"
             app:layout_constraintTop_toBottomOf="@id/priorityItem"
             tools:text="1st Jan 1970"
             android:text="@{taskItems.date}"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"
+            android:textAppearance="?attr/textAppearanceCaption"
             />
 
         <ImageView

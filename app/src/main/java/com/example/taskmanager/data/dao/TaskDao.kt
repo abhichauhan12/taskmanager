@@ -28,7 +28,7 @@ interface TaskDao {
     @Query("select * from tasks_table where Completed=:completed order by time_added asc")
     suspend fun getDeadlineSort(completed : Boolean = true) : List<Task>
 
-    @Query("select * from tasks_table where Completed=:completed order by time_added asc, priority asc ")
+    @Query("select * from tasks_table where Completed=:completed order by  priority desc ,time_added asc")
     suspend fun getCompletedPriorityDeadlineTask(completed : Boolean = true): List<Task>
 
 

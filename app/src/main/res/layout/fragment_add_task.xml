@@ -37,7 +37,8 @@
             android:src="@drawable/ic_save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="#dfdfdf" />
+            app:tint="#dfdfdf"
+            />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/title_container"
@@ -66,21 +67,20 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.example.taskmanager.utils.LinedEditText
+        <EditText
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:id="@+id/task"
             android:hint="@string/task"
-            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textAppearance="?attr/textAppearanceBody1"
             android:textColor="#dfdfdf"
             android:textColorHint="#dddfdfdf"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title_container"
-            app:layout_constraintBottom_toTopOf="@id/priority"
+            app:layout_constraintBottom_toTopOf="@id/priority_text"
             android:gravity="top"
             android:paddingHorizontal="16dp"
-
             />
 
         <TextView
@@ -93,6 +93,19 @@
             tools:text="01 Jan 1970 10:10 AM"
             android:textColor="#dfdfdf"
             android:layout_marginBottom="16dp"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/priority"
+            android:textColor="#dfdfdf"
+            android:id="@+id/priority_text"
+            tools:text="Priority : 3"
+            android:textAppearance="?textAppearanceOverline"
 
             />
 
@@ -112,47 +125,18 @@
             app:trackColor="@color/teal_light"
             />
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@id/save_button"
-            app:layout_constraintStart_toEndOf="@id/back_button"
-            app:layout_constraintTop_toTopOf="@id/back_button"
-            app:layout_constraintBottom_toBottomOf="@id/back_button"
-            android:id="@+id/color_edittext"
-            android:hint="@string/_00251a"
-            android:textColor="#dfdfdf"
-            android:textColorHint="#77dfdfdf"
-            android:background="@drawable/color_edittext_background"
-            android:paddingHorizontal="32dp"
-            android:paddingVertical="8dp"
-            />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/color_edittext"
-            app:layout_constraintEnd_toEndOf="@id/color_edittext"
-            app:layout_constraintTop_toBottomOf="@id/color_edittext"
-            android:text="@string/enter_valid_color_n_00251a"
-            android:textColor="#FF0000"
-            android:textAppearance="?textAppearanceOverline"
-            android:layout_marginTop="4dp"
-            android:gravity="center"
-            android:visibility="gone"
-            android:id="@+id/invaild_color_text"
-            />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             android:src="@drawable/ic_color"
-            android:layout_margin="16dp"
             android:id="@+id/color_palette"
             android:background="?attr/selectableItemBackgroundBorderless"
-
+            app:layout_constraintTop_toTopOf="@id/save_button"
+            app:layout_constraintEnd_toStartOf="@id/save_button"
+            android:layout_marginEnd="16dp"
+            app:tint="#dfdfdf"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
