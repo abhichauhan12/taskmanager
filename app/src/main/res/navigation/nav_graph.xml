@@ -2,14 +2,57 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeActivity">
-
-    <activity
-        android:id="@+id/homeActivity"
-        android:name="com.example.taskmanager.ui.HomeActivity"
-        android:label="HomeActivity" />
+    app:startDestination="@id/task">
     <fragment
         android:id="@+id/task"
-        android:name="com.example.taskmanager.ui.Task.Task"
-        android:label="Task" />
+        android:name="com.example.taskmanager.ui.Task.TaskFragmnet"
+        android:label="Task" >
+        <action
+            android:id="@+id/action_task_to_addTask"
+            app:destination="@id/addTask" />
+        <action
+            android:id="@+id/action_task_to_editBottomSheet"
+            app:destination="@id/editBottomSheet" />
+        <action
+            android:id="@+id/action_task_to_menuBottomSheet"
+            app:destination="@id/menuBottomSheet" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTask"
+        android:name="com.example.taskmanager.ui.add.AddTask"
+        android:label="AddTask" >
+        <action
+            android:id="@+id/action_addTask_to_task"
+            app:destination="@id/task"
+            app:popUpTo="@id/task"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="task"
+            app:argType="com.example.taskmanager.data.entities.Task"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_addTask_to_colorBottomSheet"
+            app:destination="@id/colorBottomSheet" />
+    </fragment>
+    <dialog
+        android:id="@+id/editBottomSheet"
+        android:name="com.example.taskmanager.ui.Task.EditBottomsheet.EditBottomSheet"
+        android:label="EditBottomSheet" >
+        <argument
+            android:name="task"
+            app:argType="com.example.taskmanager.data.entities.Task" />
+    </dialog>
+    <dialog
+        android:id="@+id/menuBottomSheet"
+        android:name="com.example.taskmanager.ui.Task.MenuBottomSheet"
+        android:label="MenuBottomSheet" />
+    <dialog
+        android:id="@+id/colorBottomSheet"
+        android:name="com.example.taskmanager.ui.add.ColorBottomSheet"
+        android:label="ColorBottomSheet" >
+        <argument
+            android:name="task"
+            app:argType="com.example.taskmanager.data.entities.Task" />
+    </dialog>
 </navigation>

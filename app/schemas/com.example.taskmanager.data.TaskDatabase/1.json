@@ -2,15 +2,27 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e97b9ce245a64ab17acf5c1e7bcb38a5",
+    "identityHash": "f18b573dbe57130d1c43524e7976ec3e",
     "entities": [
       {
-        "tableName": "tasksDetails",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`task` TEXT NOT NULL, `priority` INTEGER NOT NULL, `date` TEXT NOT NULL, `Completed` INTEGER NOT NULL, PRIMARY KEY(`task`))",
+        "tableName": "tasks_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT NOT NULL, `tasks` TEXT NOT NULL, `priority` INTEGER NOT NULL, `task_color` INTEGER NOT NULL, `time_added` TEXT NOT NULL, `deadline` TEXT NOT NULL, `completed` INTEGER NOT NULL, `cheked` INTEGER NOT NULL)",
         "fields": [
           {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "task",
-            "columnName": "task",
+            "columnName": "tasks",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -21,23 +33,41 @@
             "notNull": true
           },
           {
+            "fieldPath": "taskColor",
+            "columnName": "task_color",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
             "fieldPath": "time",
-            "columnName": "date",
+            "columnName": "time_added",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deadline",
+            "columnName": "deadline",
             "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "completed",
-            "columnName": "Completed",
+            "columnName": "completed",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "check",
+            "columnName": "cheked",
             "affinity": "INTEGER",
             "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "task"
+            "id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
@@ -46,7 +76,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e97b9ce245a64ab17acf5c1e7bcb38a5')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f18b573dbe57130d1c43524e7976ec3e')"
     ]
   }
 }

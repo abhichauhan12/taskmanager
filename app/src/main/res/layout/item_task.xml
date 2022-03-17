@@ -1,47 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
-            name="taskItem"
-            type="com.example.taskmanager.data.entities.TaskEntitiy" />
+            name="taskItems"
+            type="com.example.taskmanager.data.entities.Task" />
 
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="4dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:id="@+id/item_container"
+        android:background="?selectableItemBackground"
         >
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Task name"
-            android:text="@{taskItem.task}"
-            android:textSize="20sp"
             android:id="@+id/taskNameItem"
-            />
-        <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{taskItem.priorityAsString}"
-            tools:text="@string/priority_task"
+            android:text="@{taskItems.title}"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Task name"
+            />
+
+        <TextView
             android:id="@+id/priorityItem"
-            android:textSize="12sp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{taskItems.task}"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintEnd_toEndOf="@id/taskNameItem"
+            app:layout_constraintStart_toStartOf="@id/taskNameItem"
+            app:layout_constraintTop_toBottomOf="@id/taskNameItem"
+            tools:text="@tools:sample/lorem/random"
+            android:maxLines="5"
             />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/deadlineitem"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="date"
-            android:text="@{taskItem.time}"
-            android:textSize="12sp"
-            android:id="@+id/timeItem"
+            app:layout_constraintEnd_toEndOf="@id/taskNameItem"
+            app:layout_constraintStart_toStartOf="@id/taskNameItem"
+            app:layout_constraintTop_toBottomOf="@id/priorityItem"
+            tools:text="1st Jan 1970"
+            android:text="@{taskItems.date}"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"
+            android:textAppearance="?attr/textAppearanceCaption"
             />
 
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_threedot"
+            app:tint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/deadlineitem"
+            android:id="@+id/menu_item"
+            android:background="?selectableItemBackgroundBorderless"
+            />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

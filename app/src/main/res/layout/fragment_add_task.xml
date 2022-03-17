@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/teal_dark"
+        tools:context=".ui.add.AddTask"
+        android:id="@+id/add_task_container"
+
+        >
+
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#dfdfdf" />
+
+        <ImageView
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#dfdfdf"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/title_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:padding="0dp"
+            app:boxBackgroundMode="none"
+            app:boxStrokeWidth="0dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/back_button">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/title"
+                android:lines="1"
+                android:paddingVertical="0dp"
+                android:textAppearance="?attr/textAppearanceHeadline5"
+                android:textColor="#dfdfdf"
+                android:textColorHint="#dddfdfdf"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/task"
+            android:hint="@string/task"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textColor="#dfdfdf"
+            android:textColorHint="#dddfdfdf"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_container"
+            app:layout_constraintBottom_toTopOf="@id/priority_text"
+            android:gravity="top"
+            android:paddingHorizontal="16dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/time"
+            tools:text="01 Jan 1970 10:10 AM"
+            android:textColor="#dfdfdf"
+            android:layout_marginBottom="16dp"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/priority"
+            android:textColor="#dfdfdf"
+            android:id="@+id/priority_text"
+            tools:text="Priority : 3"
+            android:textAppearance="?textAppearanceOverline"
+
+            />
+
+        <com.google.android.material.slider.Slider
+            android:layout_margin="32dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/time"
+            android:id="@+id/priority"
+            android:stepSize="1"
+            android:value="3"
+            android:valueFrom="1"
+            android:valueTo="5"
+            app:thumbColor="#dfdfdf"
+            app:trackColor="@color/teal_light"
+            />
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_color"
+            android:id="@+id/color_palette"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintTop_toTopOf="@id/save_button"
+            app:layout_constraintEnd_toStartOf="@id/save_button"
+            android:layout_marginEnd="16dp"
+            app:tint="#dfdfdf"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
