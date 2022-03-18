@@ -1,0 +1,91 @@
+package com.example.taskmanager.ui.home.viewmodels
+
+
+import android.content.Context
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewModelScope
+import com.example.taskmanager.domain.repo.TaskRepository
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.launch
+
+class TaskViewModel(private val taskRepository: TaskRepository) : ViewModel() {
+
+    companion object{
+        fun get(owner: ViewModelStoreOwner, context: Context) : TaskViewModel {
+            return ViewModelProvider(owner, Factory(
+                taskRepository = TaskRepository.getInstance(context))
+            )[TaskViewModel::class.java]
+        }
+    }
+
+    private val allTasks = taskRepository.getTasks()
+
+    val showCompleted = taskRepository.showCompleted
+    val sortByPriority = taskRepository.sortByPriority
+    val sortByDeadline = taskRepository.sortByDeadline
+
+    private val itemToBeDeleted: HashSet<Int> = HashSet()
+    private val itemToBeMarkAsCompleted: HashMap<Int, Boolean> = HashMap()
+
+    val tasks = combine(
+        showCompleted,
+        sortByPriority,
+        sortByDeadline,
+        allTasks
+    ) { showCompleted, showPriority, showDeadline, _ ->
+        when {
+            showDeadline && showPriority -> taskRepository.getCompletedPriorityDeadlineTask(
+                showCompleted = showCompleted
+            )
+            showDeadline -> taskRepository.getDeadlineSort(showCompleted)
+            showPriority -> taskRepository.getPriorityInc(showCompleted)
+            else -> taskRepository.getTasks(showCompleted)
+        }
+    }
+
+    fun updateShowCompleted(showCompleted: Boolean) {
+        viewModelScope.launch { taskRepository.updateShowCompleted(showCompleted) }
+    }
+
+    fun updateShowPriority(showPriority: Boolean) {
+        viewModelScope.launch { taskRepository.updateShowPriority(showPriority) }
+    }
+
+    fun updateShowDeadline(showDeadline: Boolean) {
+        viewModelScope.launch { taskRepository.updateShowDeadline(showDeadline) }
+    }
+
+    fun delete() {
+        viewModelScope.launch {
+            itemToBeDeleted.forEach {
+                taskRepository.deleteTask(id = it)
+            }
+        }
+    }
+
+    fun updateItemToBeDeleted(id: Int) {
+        if (itemToBeDeleted.contains(id)) itemToBeDeleted.remove(id)
+        else itemToBeDeleted.add(id)
+    }
+
+    fun updateItemToBeMarkAsCompleted(id: Int, completed: Boolean) {
+        if (itemToBeMarkAsCompleted.containsKey(id)) itemToBeMarkAsCompleted.remove(id)
+        else itemToBeMarkAsCompleted[id] = !completed
+    }
+
+    fun markAsCompleted() {
+        viewModelScope.launch {
+            itemToBeMarkAsCompleted.forEach { (id, completed) ->
+                taskRepository.toggleCompleted(completed, id)
+            }.also { itemToBeMarkAsCompleted.clear() }
+        }
+    }
+
+    class Factory(private val taskRepository: TaskRepository) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return TaskViewModel(taskRepository) as T
+        }
+    }
+}

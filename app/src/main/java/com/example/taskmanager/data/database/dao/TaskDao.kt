@@ -1,7 +1,7 @@
-package com.example.taskmanager.data.dao
+package com.example.taskmanager.data.database.dao
 
 import androidx.room.*
-import com.example.taskmanager.data.entities.Task
+import com.example.taskmanager.data.database.entities.Task
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -31,11 +31,6 @@ interface TaskDao {
     @Query("select * from tasks_table where Completed=:completed order by  priority desc ,time_added asc")
     suspend fun getCompletedPriorityDeadlineTask(completed : Boolean = true): List<Task>
 
-
-    @Query("SELECT * from tasks_table where Completed=:completed")
-    suspend fun getNotCompletedTask(completed: Boolean = false) : List<Task>
-
     @Query("UPDATE tasks_table SET Completed=:completed WHERE id=:id")
     suspend fun toggleCompleted(completed: Boolean,id: Int)
-
 }

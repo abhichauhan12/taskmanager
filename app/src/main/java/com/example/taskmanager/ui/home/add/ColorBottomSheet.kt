@@ -1,15 +1,14 @@
-package com.example.taskmanager.ui.add
+package com.example.taskmanager.ui.home.add
 
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import com.example.taskmanager.R
 import com.example.taskmanager.databinding.FragmentColorBottomSheetBinding
-import com.example.taskmanager.ui.HomeActivity
-import com.example.taskmanager.ui.UtilsViewModel
+import com.example.taskmanager.ui.home.HomeActivity
+import com.example.taskmanager.ui.home.viewmodels.UtilsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
@@ -17,12 +16,7 @@ class ColorBottomSheet : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentColorBottomSheetBinding
 
-    private val utilsViewModel by lazy {
-        ViewModelProvider(
-            requireActivity() as HomeActivity,
-            UtilsViewModel.Factory()
-        )[UtilsViewModel::class.java]
-    }
+    private val utilsViewModel by lazy { UtilsViewModel.get(requireActivity() as HomeActivity) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,10 +45,9 @@ class ColorBottomSheet : BottomSheetDialogFragment() {
         binding.color12.setOnClickListener { onColorSelected(it) }
         binding.color13.setOnClickListener { onColorSelected(it) }
         binding.color14.setOnClickListener { onColorSelected(it) }
-
     }
 
-    fun onColorSelected(v: View) {
+    private fun onColorSelected(v: View) {
         val color = when (v.id) {
             R.id.color1 -> Color.parseColor("#00251a")
             R.id.color2 -> Color.parseColor("#3E2723")
@@ -69,12 +62,10 @@ class ColorBottomSheet : BottomSheetDialogFragment() {
             R.id.color11 -> Color.parseColor("#D50B77")
             R.id.color12 -> Color.parseColor("#168A1B")
             R.id.color13 -> Color.parseColor("#784343")
-            else  -> Color.parseColor("#2F505A")
+            else -> Color.parseColor("#2F505A")
         }
+
         utilsViewModel.updateSelectedColor(color)
-        dismiss()
-
     }
-
 
 }

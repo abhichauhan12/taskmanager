@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import com.example.taskmanager.data.TaskDatabase
-import com.example.taskmanager.data.entities.Task
+import com.example.taskmanager.data.database.TaskDatabase
+import com.example.taskmanager.data.database.entities.Task
 import com.example.taskmanager.utils.SettingsPrefsConstants.showCompletedKey
 import com.example.taskmanager.utils.SettingsPrefsConstants.sortByDeadlineKey
 import com.example.taskmanager.utils.SettingsPrefsConstants.sortByPriorityKey

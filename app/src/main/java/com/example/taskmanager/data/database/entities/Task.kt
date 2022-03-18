@@ -1,4 +1,4 @@
-package com.example.taskmanager.data.entities
+package com.example.taskmanager.data.database.entities
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo

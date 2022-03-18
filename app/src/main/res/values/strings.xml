@@ -13,5 +13,6 @@
     <string name="priority">Priority : %1$d</string>
     <string name="take_a_note">Take a note</string>
     <string name="color">Color</string>
+    <string name="congratulation_all_task_have_been_completed">Congratulation all task have been completed!!!</string>
 
 </resources>

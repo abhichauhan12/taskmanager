@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.Task.TaskFragmnet">
+        tools:context=".ui.home.task.TaskScreen">
 
         <include
             layout="@layout/layout_toolbar_general"
@@ -37,7 +37,7 @@
             app:layout_constraintBottom_toTopOf="@id/add_task"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Congratulation all task have been completed!!!"
+            android:text="@string/congratulation_all_task_have_been_completed"
             android:textAppearance="?attr/textAppearanceHeadline5"
             android:gravity="center"
             android:id="@+id/empty_list_text"
