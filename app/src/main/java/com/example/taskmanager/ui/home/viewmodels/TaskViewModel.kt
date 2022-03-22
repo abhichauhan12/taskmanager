@@ -7,7 +7,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewModelScope
 import com.example.taskmanager.domain.repo.TaskRepository
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class TaskViewModel(private val taskRepository: TaskRepository) : ViewModel() {
@@ -44,6 +47,8 @@ class TaskViewModel(private val taskRepository: TaskRepository) : ViewModel() {
             else -> taskRepository.getTasks(showCompleted)
         }
     }
+
+    val searchTasks = taskRepository.getTasks().stateIn(viewModelScope, SharingStarted.Lazily, ArrayList())
 
     fun updateShowCompleted(showCompleted: Boolean) {
         viewModelScope.launch { taskRepository.updateShowCompleted(showCompleted) }

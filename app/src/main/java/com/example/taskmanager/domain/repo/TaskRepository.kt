@@ -6,10 +6,10 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import com.example.taskmanager.data.database.TaskDatabase
 import com.example.taskmanager.data.database.entities.Task
+import com.example.taskmanager.data.preferences.dataStore
 import com.example.taskmanager.utils.SettingsPrefsConstants.showCompletedKey
 import com.example.taskmanager.utils.SettingsPrefsConstants.sortByDeadlineKey
 import com.example.taskmanager.utils.SettingsPrefsConstants.sortByPriorityKey
-import com.example.taskmanager.utils.dataStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext

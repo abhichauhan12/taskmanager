@@ -1,7 +1,10 @@
 package com.example.taskmanager.ui.home.task.adapters
 
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,8 +13,9 @@ import com.example.taskmanager.databinding.ItemTaskBinding
 
 class TaskAdapter(
     private val onItemClick :(Task) -> Unit,
-    private val onMenuClicked:(Task) -> Unit
-) : ListAdapter<Task, TaskAdapter.TaskViewHolder>(DiffUtilCallback) {
+    private val onMenuClicked:(Task) -> Unit,
+    private val searchFilter : Filter? = null
+) : ListAdapter<Task, TaskAdapter.TaskViewHolder>(DiffUtilCallback), Filterable {
 
     object DiffUtilCallback : DiffUtil.ItemCallback<Task>() {
         override fun areItemsTheSame(oldItem: Task, newItem: Task) = oldItem.id == newItem.id
@@ -31,10 +35,17 @@ class TaskAdapter(
                 onItemClick(task)
             }
 
+            binding.task.setOnClickListener {
+                val task: Task = binding.taskItems!!
+                onItemClick(task)
+            }
+
             binding.menuItem.setOnClickListener {
                 val task: Task = binding.taskItems!!
                 onMenuClicked(task)
             }
+
+            binding.task.movementMethod = LinkMovementMethod.getInstance()
         }
     }
 
@@ -44,4 +55,6 @@ class TaskAdapter(
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.bind(task = getItem(position))
     }
+
+    override fun getFilter(): Filter? { return searchFilter }
 }

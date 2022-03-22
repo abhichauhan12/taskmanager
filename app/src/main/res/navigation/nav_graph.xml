@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_task_to_task_menu"
             app:destination="@id/taskMenu" />
+        <action
+            android:id="@+id/action_task_to_search"
+            app:destination="@id/search" />
     </fragment>
 
     <fragment
@@ -71,4 +74,17 @@
             android:name="task"
             app:argType="com.example.taskmanager.data.database.entities.Task" />
     </dialog>
+    <fragment
+        android:id="@+id/search"
+        android:name="com.example.taskmanager.ui.home.search.Search"
+        android:label="Search"
+        tools:layout="@layout/fragment_search"
+        >
+        <action
+            android:id="@+id/action_search_to_taskActions"
+            app:destination="@id/taskActions" />
+        <action
+            android:id="@+id/action_search_to_addTask"
+            app:destination="@id/addTask" />
+    </fragment>
 </navigation>

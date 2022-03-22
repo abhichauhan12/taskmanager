@@ -3,6 +3,8 @@ package com.example.taskmanager.utils
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.text.Spannable
+import android.text.Spanned
 import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
@@ -15,8 +17,8 @@ import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import androidx.navigation.fragment.findNavController
 import com.example.taskmanager.utils.SettingsPrefsConstants.SETTING_PREFERENCE_NAME
-
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = SETTING_PREFERENCE_NAME)
+import io.noties.markwon.Markwon
+import io.noties.markwon.SoftBreakAddsNewLinePlugin
 
 fun Activity.statusBarColor(color : Int) {
     window.statusBarColor = color
@@ -42,4 +44,8 @@ fun Fragment.showToast(msg : String, long : Boolean = false) {
 
 fun Fragment.showToast(@StringRes msg : Int, long : Boolean = false) {
     Toast.makeText(requireContext(), getString(msg), if (long) Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show()
+}
+
+fun String.getMarkDownText(context: Context): Spanned {
+    return Markwon.builder(context).usePlugin(SoftBreakAddsNewLinePlugin.create()).build().toMarkdown(this)
 }

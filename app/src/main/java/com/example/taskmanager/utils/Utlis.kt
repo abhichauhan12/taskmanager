@@ -14,3 +14,9 @@ fun getFormattedDate(timeInMillis:Long) : String{
     val date = Date(timeInMillis)
     return format.format(date)
 }
+
+enum class Theme {
+    SYSTEM,
+    DARK,
+    LIGHT
+}

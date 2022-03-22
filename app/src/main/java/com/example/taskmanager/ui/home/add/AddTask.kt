@@ -2,6 +2,7 @@ package com.example.taskmanager.ui.home.add
 
 import android.os.Bundle
 import android.view.View
+import android.widget.DatePicker
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.taskmanager.R
@@ -13,6 +14,8 @@ import com.example.taskmanager.ui.home.viewmodels.UtilsViewModel
 import com.example.taskmanager.utils.*
 import com.example.taskmanager.utils.BundleConstants.TASK
 import com.example.taskmanager.utils.TaskConstants.COLOR_DEFAULT
+import com.example.taskmanager.utils.TaskConstants.DEFAULT_DEADLINE
+import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.coroutines.flow.collect
 
 class AddTask : Fragment(R.layout.fragment_add_task) {
@@ -24,6 +27,15 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
 
     private var onSaveButtonClicked: Boolean = false
     private var color = COLOR_DEFAULT
+    private var deadline: Long = DEFAULT_DEADLINE
+
+    private val deadlinePicker by lazy {
+        val selectedDateShouldBe =
+            if (deadline == DEFAULT_DEADLINE) System.currentTimeMillis() else deadline
+
+        MaterialDatePicker.Builder.datePicker()
+            .setTitleText("Select deadline").setSelection(selectedDateShouldBe).build()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,11 +53,13 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
             binding.title.setText(task.title)
             binding.task.setText(task.task)
 
-            binding.time.text = getFormattedTime(if (task.time.isNotBlank()) task.time.toLong() else 0)
+            binding.time.text =
+                getFormattedTime(if (task.time.isNotBlank()) task.time.toLong() else 0)
             binding.priority.value = task.priority.toFloat()
             binding.priorityText.text = getString(R.string.priority, task.priority)
             binding.addTaskContainer.setBackgroundColor(task.taskColor)
             color = task.taskColor
+            deadline = task.deadline
 
             statusBarColor(color = task.taskColor)
         } else {
@@ -62,6 +76,8 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
 
         binding.colorPalette.setOnClickListener { safeNavigate(R.id.action_addTask_to_colorBottomSheet) }
 
+        binding.deadline.setOnClickListener { openDatePicker() }
+
         binding.priority.addOnChangeListener { _, value, _ ->
             binding.priorityText.text = getString(R.string.priority, value.toInt())
         }
@@ -74,6 +90,11 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
             }
         }
 
+    }
+
+    private fun openDatePicker() {
+        deadlinePicker.addOnPositiveButtonClickListener { deadline = it }
+        deadlinePicker.showNow(childFragmentManager, null)
     }
 
     private fun saveDataAndGoBack() {
@@ -89,7 +110,7 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
                     priority = binding.priority.value.toInt(),
                     taskColor = color,
                     time = System.currentTimeMillis().toString(),
-                    deadline = TaskConstants.DEADLINE_DEFAULT,
+                    deadline = deadline,
                     completed = false
                 )
 
@@ -102,7 +123,7 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
                     priority = binding.priority.value.toInt(),
                     taskColor = color,
                     time = task.time,
-                    deadline = task.deadline,
+                    deadline = deadline,
                     completed = task.completed
                 )
 

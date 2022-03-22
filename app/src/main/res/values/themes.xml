@@ -1,10 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.TaskManager" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Primary brand color. -->
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
+
+    <style name="Theme.TaskManager" parent="AppTheme">
         <item name="colorPrimary">@color/teal</item>
         <item name="colorPrimaryDark">@color/teal_dark</item>
         <item name="colorAccent">@color/teal_light</item>
-        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/white</item>
+
+        <item name="iconKaTint">@color/black</item>
+        <item name="bottomSheetKaBackground">@color/white</item>
     </style>
+
 </resources>

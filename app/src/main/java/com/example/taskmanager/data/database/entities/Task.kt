@@ -32,7 +32,7 @@ data class Task(
     val time : String,
 
     @ColumnInfo(name = "deadline")
-    val deadline : String,
+    val deadline : Long,
 
     @ColumnInfo(name = "completed")
     val completed : Boolean = false,
@@ -42,5 +42,5 @@ data class Task(
 
 ): Parcelable{
 
-    fun getDate() = getFormattedDate(time.toLong())
+    fun getDate() = getFormattedDate(deadline)
 }

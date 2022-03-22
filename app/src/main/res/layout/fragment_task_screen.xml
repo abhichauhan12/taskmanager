@@ -28,6 +28,7 @@
             tools:listitem="@layout/item_task"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             />
 
         <TextView
@@ -46,17 +47,15 @@
             />
 
 
-        <TextView
+        <View
             android:layout_width="0dp"
             android:layout_height="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/add_task"
-            android:background="@color/black"
-            android:alpha="0.1"
+            android:background="?iconKaTint"
+            android:alpha="0.3"
             />
-
-
 
         <TextView
             android:layout_width="0dp"
@@ -79,7 +78,7 @@
             app:layout_constraintBottom_toBottomOf="@id/add_task"
             app:layout_constraintTop_toTopOf="@id/add_task"
             android:src="@drawable/ic_menu"
-            app:tint="@color/black"
+            app:tint="?iconKaTint"
             android:layout_marginEnd="16dp"
             android:id="@+id/menu_taskFragment"
             android:background="?selectableItemBackgroundBorderless"
