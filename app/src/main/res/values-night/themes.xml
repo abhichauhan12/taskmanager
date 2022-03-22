@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.TaskManager" parent="AppTheme">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#212121</item>
+        <item name="colorPrimaryDark">#101010</item>
+        <item name="colorAccent">#616161</item>
+
+        <item name="android:windowBackground">#012345</item>
+        <item name="colorSurface">#545454</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <item name="iconKaTint">@color/white</item>
+        <item name="bottomSheetKaBackground">@color/black</item>
+    </style>
+</resources>
