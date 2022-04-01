@@ -55,14 +55,6 @@ class TaskScreen : Fragment(R.layout.fragment_task_screen) {
             }
         }
 
-        binding.toolBarTaskFragment.searchToolbar.setOnClickListener {
-            safeNavigate(R.id.action_task_to_search)
-        }
-
-        binding.toolBarTaskFragment.themeToolbar.setOnClickListener {
-            lifecycleScope.launchWhenStarted { checkAndUpdateAppTheme() }
-        }
-
     }
 
     private fun checkAndUpdateAppTheme() {
@@ -78,14 +70,20 @@ class TaskScreen : Fragment(R.layout.fragment_task_screen) {
     }
 
     private fun initToolbar() {
-        binding.toolBarTaskFragment.titleToolbar.text= getString(R.string.tasks)
-        binding.toolBarTaskFragment.themeToolbar.apply {
 
-        if(utilsViewModel.theme.value == Theme.DARK.name){
-                setImageResource(R.drawable.ic_dark_mode)
-            }else{
-                setImageResource(R.drawable.ic_light_mode)
-            }
+        binding.toolBarTaskFragment.container.setOnClickListener {
+            safeNavigate(R.id.action_task_to_search)
+        }
+
+        binding.toolBarTaskFragment.themeIcon.setOnClickListener {
+            lifecycleScope.launchWhenStarted { checkAndUpdateAppTheme() }
+        }
+
+        binding.toolBarTaskFragment.themeIcon.apply {
+            setImageResource(
+                if (utilsViewModel.theme.value == Theme.DARK.name) R.drawable.ic_dark_mode
+                else R.drawable.ic_light_mode
+            )
         }
     }
 }

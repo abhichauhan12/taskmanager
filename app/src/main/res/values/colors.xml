@@ -12,5 +12,9 @@
     <color name="teal_dark">#00251a</color>
     <color name="teal_light">#39796b</color>
     <color name="teal">#004d40</color>
+    <color name="blue">#012345</color>
+
+    <color name="transparent_blue">#234567</color>
+    <color name="light_gray">#dddddd</color>
 
 </resources>
