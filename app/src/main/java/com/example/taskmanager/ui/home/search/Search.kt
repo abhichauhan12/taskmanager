@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST", "NestedLambdaShadowedImplicitParameter")
+
 package com.example.taskmanager.ui.home.search
 
 import android.os.Bundle
@@ -5,6 +7,7 @@ import android.view.View
 import android.widget.Filter
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.taskmanager.R
 import com.example.taskmanager.data.database.entities.Task
@@ -14,13 +17,15 @@ import com.example.taskmanager.ui.home.viewmodels.TaskViewModel
 import com.example.taskmanager.utils.BundleConstants
 import com.example.taskmanager.utils.navigateUp
 import com.example.taskmanager.utils.safeNavigate
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class Search : Fragment(R.layout.fragment_search) {
 
     private lateinit var binding: FragmentSearchBinding
-    private lateinit var taskViewModel: TaskViewModel
+    private val taskViewModel by viewModels<TaskViewModel>()
 
     private val searchFilter: Filter by lazy {
         object : Filter() {
@@ -74,14 +79,11 @@ class Search : Fragment(R.layout.fragment_search) {
         binding = FragmentSearchBinding.bind(view)
         binding.lifecycleOwner = this
 
-        taskViewModel = TaskViewModel.get(this, requireContext())
-
         lifecycleScope.launch {
             taskViewModel.searchTasks.collect { taskAdapter.submitList(it) }
         }
 
         binding.tasksList.apply { adapter = taskAdapter }
-
 
         initToolbar()
     }
@@ -89,9 +91,7 @@ class Search : Fragment(R.layout.fragment_search) {
     private fun initToolbar() {
         binding.upButton.setOnClickListener { navigateUp() }
 
-        binding.searchEdittext.addTextChangedListener {
-            it?.toString()?.let { searchTasks(query = it) }
-        }
+        binding.searchEdittext.addTextChangedListener { it?.toString()?.let { searchTasks(query = it) } }
     }
 
     private fun searchTasks(query: String) {

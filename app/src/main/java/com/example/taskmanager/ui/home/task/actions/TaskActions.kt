@@ -4,19 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.example.taskmanager.data.database.entities.Task
 import com.example.taskmanager.databinding.FragmentTaskActionsBinding
-import com.example.taskmanager.domain.repo.TaskRepository
 import com.example.taskmanager.ui.home.viewmodels.TaskViewModel
 import com.example.taskmanager.utils.BundleConstants.TASK
 import com.example.taskmanager.utils.showToast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TaskActions : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentTaskActionsBinding
-    private lateinit var taskViewModel: TaskViewModel
+    private val taskViewModel: TaskViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,8 +33,6 @@ class TaskActions : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val task: Task = requireArguments().getParcelable(TASK)!!
-
-        taskViewModel = TaskViewModel.get(this, requireContext())
 
         binding.completedBottomSheet.text = if (task.completed) "Mark as not completed" else "Mark as completed"
 

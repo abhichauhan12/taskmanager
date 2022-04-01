@@ -7,22 +7,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewModelScope
 import com.example.taskmanager.domain.repo.TaskRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TaskViewModel(private val taskRepository: TaskRepository) : ViewModel() {
-
-    companion object{
-        fun get(owner: ViewModelStoreOwner, context: Context) : TaskViewModel {
-            return ViewModelProvider(owner, Factory(
-                taskRepository = TaskRepository.getInstance(context))
-            )[TaskViewModel::class.java]
-        }
-    }
-
+@HiltViewModel
+class TaskViewModel @Inject constructor(private val taskRepository: TaskRepository) : ViewModel() {
     private val allTasks = taskRepository.getTasks()
 
     val showCompleted = taskRepository.showCompleted
@@ -85,12 +79,6 @@ class TaskViewModel(private val taskRepository: TaskRepository) : ViewModel() {
             itemToBeMarkAsCompleted.forEach { (id, completed) ->
                 taskRepository.toggleCompleted(completed, id)
             }.also { itemToBeMarkAsCompleted.clear() }
-        }
-    }
-
-    class Factory(private val taskRepository: TaskRepository) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return TaskViewModel(taskRepository) as T
         }
     }
 }
