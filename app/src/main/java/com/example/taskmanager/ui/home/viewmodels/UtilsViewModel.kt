@@ -1,19 +1,20 @@
 package com.example.taskmanager.ui.home.viewmodels
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.taskmanager.ui.home.HomeActivity
+import com.example.taskmanager.domain.repo.AppRepository
+import com.example.taskmanager.utils.Theme
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UtilsViewModel : ViewModel() {
+@HiltViewModel
+class UtilsViewModel @Inject constructor(private val appRepository: AppRepository) : ViewModel() {
 
-    companion object {
-        fun get(activity: HomeActivity) =
-            ViewModelProvider(activity, Factory())[UtilsViewModel::class.java]
-    }
+    val theme = appRepository.appTheme
+
 
     private val _selectedColor = MutableSharedFlow<Int>()
     val selectedColor = _selectedColor.asSharedFlow()
@@ -22,9 +23,7 @@ class UtilsViewModel : ViewModel() {
         viewModelScope.launch { _selectedColor.emit(color) }
     }
 
-    class Factory : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return UtilsViewModel() as T
-        }
+    fun updateAppTheme(theme: Theme) {
+        viewModelScope.launch { appRepository.updateAppTheme(theme) }
     }
 }

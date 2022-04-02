@@ -15,5 +15,6 @@
     <string name="color">Color</string>
     <string name="congratulation_all_task_have_been_completed">Congratulation all task have been completed!!!</string>
     <string name="search_in_task">Search in Task</string>
+    <string name="tasks">Tasks</string>
 
 </resources>

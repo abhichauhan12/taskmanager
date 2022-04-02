@@ -9,12 +9,13 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.taskmanager.R
 import com.example.taskmanager.data.database.entities.Task
 import com.example.taskmanager.databinding.FragmentAddTaskBinding
 import com.example.taskmanager.domain.receiver.DeadlineReceiver
-import com.example.taskmanager.ui.home.HomeActivity
 import com.example.taskmanager.ui.home.viewmodels.AddTaskViewModel
 import com.example.taskmanager.ui.home.viewmodels.UtilsViewModel
 import com.example.taskmanager.utils.*
@@ -22,16 +23,15 @@ import com.example.taskmanager.utils.BundleConstants.TASK
 import com.example.taskmanager.utils.TaskConstants.COLOR_DEFAULT
 import com.example.taskmanager.utils.TaskConstants.DEFAULT_DEADLINE
 import com.google.android.material.datepicker.MaterialDatePicker
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import java.util.concurrent.TimeUnit
 
+@AndroidEntryPoint
 class AddTask : Fragment(R.layout.fragment_add_task) {
 
     private lateinit var binding: FragmentAddTaskBinding
-
-    private lateinit var addTaskViewModel: AddTaskViewModel
-    private lateinit var utilsViewModel: UtilsViewModel
-
+    private val addTaskViewModel by viewModels<AddTaskViewModel>()
+    private val utilsViewModel by activityViewModels<UtilsViewModel>()
     private var onSaveButtonClicked: Boolean = false
     private var color = COLOR_DEFAULT
     private var deadline: Long = DEFAULT_DEADLINE
@@ -49,10 +49,6 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
 
         binding = FragmentAddTaskBinding.bind(view)
         binding.lifecycleOwner = this
-
-        addTaskViewModel = AddTaskViewModel.get(owner = this, context = requireContext())
-
-        utilsViewModel = UtilsViewModel.get(requireActivity() as HomeActivity)
 
         val task: Task? = arguments?.getParcelable(TASK)
 

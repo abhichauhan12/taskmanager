@@ -20,16 +20,4 @@ abstract class TaskDatabase : RoomDatabase() {
 
     abstract fun taskDao(): TaskDao
 
-    companion object {
-        private const val DATABASE_NAME = "task_db"
-        private var database: TaskDatabase? = null
-
-        fun getDatabase(context: Context) : TaskDatabase {
-            return database ?: synchronized(this){
-                database = Room.databaseBuilder(context, TaskDatabase::class.java, DATABASE_NAME).build()
-
-                database!!
-            }
-        }
-    }
 }

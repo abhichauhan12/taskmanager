@@ -5,18 +5,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.example.taskmanager.R
 import com.example.taskmanager.databinding.FragmentColorBottomSheetBinding
-import com.example.taskmanager.ui.home.HomeActivity
 import com.example.taskmanager.ui.home.viewmodels.UtilsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ColorBottomSheet : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentColorBottomSheetBinding
 
-    private val utilsViewModel by lazy { UtilsViewModel.get(requireActivity() as HomeActivity) }
+    private val utilsViewModel by activityViewModels<UtilsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

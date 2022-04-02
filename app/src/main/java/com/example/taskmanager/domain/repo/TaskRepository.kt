@@ -1,30 +1,19 @@
 package com.example.taskmanager.domain.repo
 
-import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import com.example.taskmanager.data.database.TaskDatabase
 import com.example.taskmanager.data.database.entities.Task
-import com.example.taskmanager.data.preferences.dataStore
 import com.example.taskmanager.utils.SettingsPrefsConstants.showCompletedKey
 import com.example.taskmanager.utils.SettingsPrefsConstants.sortByDeadlineKey
 import com.example.taskmanager.utils.SettingsPrefsConstants.sortByPriorityKey
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class TaskRepository(private val database: TaskDatabase, private val dataStore: DataStore<Preferences>) {
-    companion object {
-        private var instance: TaskRepository? = null
-
-        fun getInstance(context: Context): TaskRepository {
-            return instance ?: synchronized(this) {
-                instance = TaskRepository(database = TaskDatabase.getDatabase(context), dataStore = context.dataStore)
-                instance!!
-            }
-        }
-    }
+class TaskRepository @Inject constructor(private val database: TaskDatabase, private val dataStore: DataStore<Preferences>) {
 
     val showCompleted = dataStore.data.map {
         it[showCompletedKey]?:false
