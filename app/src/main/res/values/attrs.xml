@@ -2,4 +2,6 @@
 <resources>
     <attr name="iconKaTint" type="color"/>
     <attr name="bottomSheetKaBackground" type="color"/>
+    <attr name="generalToolbarColor" type="color"/>
+
 </resources>

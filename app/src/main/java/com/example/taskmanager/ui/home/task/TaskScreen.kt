@@ -21,14 +21,22 @@ import kotlinx.coroutines.launch
 class TaskScreen : Fragment(R.layout.fragment_task_screen) {
 
     private lateinit var binding: FragmentTaskScreenBinding
-    private val taskViewModel  by viewModels<TaskViewModel>()
-    private val utilsViewModel  by viewModels<UtilsViewModel>()
+    private val taskViewModel by viewModels<TaskViewModel>()
+    private val utilsViewModel by viewModels<UtilsViewModel>()
 
     private val taskAdapter: TaskAdapter by lazy {
         TaskAdapter(
-            onItemClick = { safeNavigate(R.id.action_task_to_add_task, Bundle().apply { putParcelable(TASK, it) }) },
+            onItemClick = {
+                safeNavigate(
+                    R.id.action_task_to_add_task,
+                    Bundle().apply { putParcelable(TASK, it) })
+            },
 
-            onMenuClicked = { safeNavigate(R.id.action_task_to_task_actions, Bundle().apply { putParcelable(TASK, it) }) }
+            onMenuClicked = {
+                safeNavigate(
+                    R.id.action_task_to_task_actions,
+                    Bundle().apply { putParcelable(TASK, it) })
+            }
         )
     }
 
@@ -52,16 +60,9 @@ class TaskScreen : Fragment(R.layout.fragment_task_screen) {
         lifecycleScope.launch {
             taskViewModel.tasks.collect {
                 taskAdapter.submitList(it)
-                binding.emptyListText.visibility = if (it.isNullOrEmpty()) View.VISIBLE else View.GONE
+                binding.emptyListText.visibility =
+                    if (it.isNullOrEmpty()) View.VISIBLE else View.GONE
             }
-        }
-
-        binding.toolBarTaskFragment.searchToolbar.setOnClickListener {
-            safeNavigate(R.id.action_task_to_search)
-        }
-
-        binding.toolBarTaskFragment.themeToolbar.setOnClickListener {
-            lifecycleScope.launchWhenStarted { checkAndUpdateAppTheme() }
         }
 
     }
@@ -69,24 +70,27 @@ class TaskScreen : Fragment(R.layout.fragment_task_screen) {
     private fun checkAndUpdateAppTheme() {
         val theme = utilsViewModel.theme.value ?: return
 
-        when(Theme.valueOf(theme)) {
+        when (Theme.valueOf(theme)) {
             Theme.SYSTEM -> utilsViewModel.updateAppTheme(Theme.DARK)
 
-            Theme.DARK ->  utilsViewModel.updateAppTheme(Theme.LIGHT)
+            Theme.DARK -> utilsViewModel.updateAppTheme(Theme.LIGHT)
 
             Theme.LIGHT -> utilsViewModel.updateAppTheme(Theme.DARK)
         }
     }
 
     private fun initToolbar() {
-        binding.toolBarTaskFragment.titleToolbar.text= getString(R.string.tasks)
-        binding.toolBarTaskFragment.themeToolbar.apply {
+        binding.toolBarTaskFragment.container.setOnClickListener {
+            safeNavigate(R.id.action_task_to_search)
+        }
 
-            if(utilsViewModel.theme.value == Theme.DARK.name){
-                setImageResource(R.drawable.ic_dark_mode)
-            }else{
-                setImageResource(R.drawable.ic_light_mode)
-            }
+        binding.toolBarTaskFragment.themeIcon.setOnClickListener {
+            lifecycleScope.launchWhenStarted { checkAndUpdateAppTheme() }
+        }
+
+        binding.toolBarTaskFragment.themeIcon.apply {
+            setImageResource(if (utilsViewModel.theme.value == Theme.DARK.name) R.drawable.ic_dark_mode
+                else R.drawable.ic_light_mode)
         }
     }
 }
