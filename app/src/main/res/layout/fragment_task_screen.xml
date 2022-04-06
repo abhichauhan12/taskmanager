@@ -3,101 +3,72 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        tools:context=".ui.home.task.TaskScreen">
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/add_task"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="4dp"
-            tools:context=".ui.home.task.TaskScreen">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:elevation="0dp">
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/toolbar"
+            <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:elevation="0dp"
-                android:background="@android:color/transparent">
+                app:layout_scrollFlags="scroll|enterAlways">
 
-                <com.google.android.material.appbar.CollapsingToolbarLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_scrollFlags="scroll|enterAlways">
+                <include
+                    android:id="@+id/toolBar_taskFragment"
+                    layout="@layout/layout_toolbar_general" />
 
-                    <include
-                        android:id="@+id/toolBar_taskFragment"
-                        layout="@layout/layout_toolbar_general" />
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-                </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
-            </com.google.android.material.appbar.AppBarLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/taskRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            tools:listitem="@layout/item_task"
+            android:paddingBottom="86dp"
+            android:clipToPadding="false"
+            />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/taskRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-                tools:listitem="@layout/item_task" />
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:navigationIcon="@drawable/ic_menu"
+            app:navigationIconTint="?iconKaTint"
+            app:fabAlignmentMode="end"
+            android:id="@+id/bottom_app_bar"
+            app:menu="@menu/task_screen_menu_light"
+            />
 
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_anchor="@id/bottom_app_bar"
+            android:src="@drawable/ic_add"
+            android:id="@+id/add_task"
+            />
 
         <TextView
             android:id="@+id/empty_list_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginBottom="40dp"
             android:gravity="center"
             android:text="@string/congratulation_all_task_have_been_completed"
             android:textAppearance="?attr/textAppearanceHeadline5"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/add_task"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:alpha="0.3"
-            android:background="?iconKaTint"
-            app:layout_constraintBottom_toTopOf="@id/add_task"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/add_task"
-            android:layout_width="0dp"
-            android:layout_height="?listPreferredItemHeightSmall"
-            android:background="?android:selectableItemBackground"
-            android:gravity="center_vertical"
-            android:paddingStart="16dp"
-            android:paddingEnd="0dp"
-            android:text="@string/take_a_note"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/menu_taskFragment"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageView
-            android:id="@+id/menu_taskFragment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_menu"
-            app:layout_constraintBottom_toBottomOf="@id/add_task"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/add_task"
-            app:tint="?iconKaTint" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

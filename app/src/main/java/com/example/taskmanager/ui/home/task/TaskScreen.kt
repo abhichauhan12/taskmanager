@@ -46,7 +46,13 @@ class TaskScreen : Fragment(R.layout.fragment_task_screen) {
 
         binding.addTask.setOnClickListener { safeNavigate(R.id.action_task_to_add_task) }
 
-        binding.menuTaskFragment.setOnClickListener { safeNavigate(R.id.action_task_to_task_menu) }
+        binding.bottomAppBar.setNavigationOnClickListener { safeNavigate(R.id.action_task_to_task_menu) }
+
+        binding.bottomAppBar.setOnMenuItemClickListener {
+            if (it.itemId == R.id.theme) checkAndUpdateAppTheme()
+
+            true
+        }
 
         lifecycleScope.launch {
             taskViewModel.tasks.collect {
@@ -75,15 +81,9 @@ class TaskScreen : Fragment(R.layout.fragment_task_screen) {
             safeNavigate(R.id.action_task_to_search)
         }
 
-        binding.toolBarTaskFragment.themeIcon.setOnClickListener {
-            lifecycleScope.launchWhenStarted { checkAndUpdateAppTheme() }
-        }
-
-        binding.toolBarTaskFragment.themeIcon.apply {
-            setImageResource(
-                if (utilsViewModel.theme.value == Theme.DARK.name) R.drawable.ic_dark_mode
-                else R.drawable.ic_light_mode
-            )
-        }
+        if (utilsViewModel.theme.value == Theme.DARK.name)
+            binding.bottomAppBar.replaceMenu(R.menu.task_screen_menu_night)
+        else
+            binding.bottomAppBar.replaceMenu(R.menu.task_screen_menu_light)
     }
 }

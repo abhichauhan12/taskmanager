@@ -21,11 +21,11 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/search_icon"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/theme_icon"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:text="@string/search_your_tasks"
                 android:textAppearance="?textAppearanceBody1"
-                android:layout_marginStart="8dp"
+                android:layout_marginHorizontal="8dp"
                 android:id="@+id/search_label"
                 />
 
@@ -38,19 +38,6 @@
                 android:src="@drawable/ic_search"
                 android:layout_marginStart="16dp"
                 android:id="@+id/search_icon"
-                app:tint="?iconKaTint"
-                android:background="?selectableItemBackgroundBorderless"
-                />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:src="@drawable/ic_dark_mode"
-                android:layout_marginEnd="16dp"
-                android:id="@+id/theme_icon"
                 app:tint="?iconKaTint"
                 android:background="?selectableItemBackgroundBorderless"
                 />
