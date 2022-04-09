@@ -137,7 +137,8 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
                 addTaskViewModel.updateTask(updatedTask).also { navigateUp() }
             }
         } else {
-            showToast("Title and Task can not be empty")
+            if (onSaveButtonClicked)
+                showToast("Title and Task can not be empty")
         }
     }
 
