@@ -1,7 +1,9 @@
 package com.example.taskmanager.ui.home.task
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -13,6 +15,7 @@ import com.example.taskmanager.ui.home.viewmodels.UtilsViewModel
 import com.example.taskmanager.utils.BundleConstants.TASK
 import com.example.taskmanager.utils.Theme
 import com.example.taskmanager.utils.safeNavigate
+import com.example.taskmanager.utils.statusBarColor
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -61,6 +64,20 @@ class TaskScreen : Fragment(R.layout.fragment_task_screen) {
             }
         }
 
+        toggleStatusBarColor()
+    }
+
+    private fun toggleStatusBarColor() {
+        val theme = utilsViewModel.theme.value ?: return
+
+        val color = when(Theme.valueOf(theme)) {
+            Theme.DARK,
+            Theme.SYSTEM -> ResourcesCompat.getColor(resources, R.color.blue, null)
+
+            Theme.LIGHT -> ResourcesCompat.getColor(resources, R.color.white, null)
+        }
+
+        statusBarColor(color)
     }
 
     private fun checkAndUpdateAppTheme() {
