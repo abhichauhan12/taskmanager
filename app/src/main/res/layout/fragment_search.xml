@@ -54,5 +54,19 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             />
 
+
+        <TextView
+            android:id="@+id/empty_list_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/no_search_found_for_you_query"
+            android:visibility="gone"
+            android:textAppearance="?attr/textAppearanceHeadline5"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -50,6 +50,8 @@ class Search : Fragment(R.layout.fragment_search) {
             override fun publishResults(query: CharSequence, list: FilterResults) {
                 val filteredList = list.values as List<Task>
                 taskAdapter.submitList(filteredList)
+
+                binding.emptyListText.visibility = if (filteredList.isNullOrEmpty()) View.VISIBLE else View.GONE
             }
 
         }
@@ -80,7 +82,11 @@ class Search : Fragment(R.layout.fragment_search) {
         binding.lifecycleOwner = this
 
         lifecycleScope.launch {
-            taskViewModel.searchTasks.collect { taskAdapter.submitList(it) }
+            taskViewModel.searchTasks.collect {
+                taskAdapter.submitList(it)
+
+                binding.emptyListText.visibility = if (it.isNullOrEmpty()) View.VISIBLE else View.GONE
+            }
         }
 
         binding.tasksList.apply { adapter = taskAdapter }
