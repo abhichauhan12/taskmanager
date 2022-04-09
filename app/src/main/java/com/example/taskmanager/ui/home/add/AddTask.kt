@@ -60,16 +60,20 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
 
             binding.time.text =
                 getFormattedTime(if (task.time.isNotBlank()) task.time.toLong() else 0)
-            binding.priority.value = task.priority.toFloat()
-            binding.priorityText.text = getString(R.string.priority, task.priority)
             binding.addTaskContainer.setBackgroundColor(task.taskColor)
             color = task.taskColor
             deadline = task.deadline
+            binding.priorityContainer.check (
+                when {
+                    task.priority >= 3 -> R.id.priority_high_chip
+                    task.priority == 2 -> R.id.priority_medium_chip
+                    else -> R.id.priority_low_chip
+                }
+            )
 
             statusBarColor(color = task.taskColor)
         } else {
             binding.time.text = getFormattedTime(System.currentTimeMillis())
-            binding.priorityText.text = getString(R.string.priority, 3)
         }
 
         binding.saveButton.setOnClickListener {
@@ -82,10 +86,6 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
         binding.colorPalette.setOnClickListener { safeNavigate(R.id.action_addTask_to_colorBottomSheet) }
 
         binding.deadline.setOnClickListener { openDatePicker() }
-
-        binding.priority.addOnChangeListener { _, value, _ ->
-            binding.priorityText.text = getString(R.string.priority, value.toInt())
-        }
 
         lifecycleScope.launchWhenStarted {
             utilsViewModel.selectedColor.collect {
@@ -102,6 +102,14 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
         deadlinePicker.showNow(childFragmentManager, null)
     }
 
+    private fun getCheckedChipPriority() : Int {
+        return when(binding.priorityContainer.checkedChipId) {
+            R.id.priority_high_chip -> 3
+            R.id.priority_medium_chip -> 2
+            else -> 1
+        }
+    }
+
     private fun saveDataAndGoBack() {
         val taskTitle = binding.title.text.toString()
         val taskSubtitle = binding.task.text.toString()
@@ -112,7 +120,7 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
                 val newTask = Task(
                     title = binding.title.text.toString(),
                     task = binding.task.text.toString(),
-                    priority = binding.priority.value.toInt(),
+                    priority = getCheckedChipPriority(),
                     taskColor = color,
                     time = System.currentTimeMillis().toString(),
                     deadline = deadline,
@@ -126,7 +134,7 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
                     id = task.id,
                     title = binding.title.text.toString(),
                     task = binding.task.text.toString(),
-                    priority = binding.priority.value.toInt(),
+                    priority = getCheckedChipPriority(),
                     taskColor = color,
                     time = task.time,
                     deadline = deadline,

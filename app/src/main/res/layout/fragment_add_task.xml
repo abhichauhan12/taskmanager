@@ -3,18 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/teal_dark"
         tools:context=".ui.home.add.AddTask"
         android:id="@+id/add_task_container"
-
         >
 
         <ImageView
@@ -26,7 +19,8 @@
             android:src="@drawable/ic_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="#dfdfdf" />
+            app:tint="?iconKaTint"
+            />
 
         <ImageView
             android:id="@+id/save_button"
@@ -37,7 +31,7 @@
             android:src="@drawable/ic_save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="#dfdfdf"
+            app:tint="?iconKaTint"
             />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -61,8 +55,7 @@
                 android:lines="1"
                 android:paddingVertical="0dp"
                 android:textAppearance="?attr/textAppearanceHeadline5"
-                android:textColor="#dfdfdf"
-                android:textColorHint="#dddfdfdf"
+                android:textColor="?iconKaTint"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -73,57 +66,82 @@
             android:id="@+id/task"
             android:hint="@string/task"
             android:textAppearance="?attr/textAppearanceBody1"
-            android:textColor="#dfdfdf"
-            android:textColorHint="#dddfdfdf"
+            android:textColor="?iconKaTint"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title_container"
             app:layout_constraintBottom_toTopOf="@id/priority_text"
             android:gravity="top"
             android:paddingHorizontal="16dp"
+            android:background="@android:color/transparent"
+            android:paddingVertical="8dp"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/time"
             tools:text="01 Jan 1970 10:10 AM"
-            android:textColor="#dfdfdf"
+            android:textColor="?iconKaTint"
             android:layout_marginBottom="16dp"
-
+            android:layout_marginStart="16dp"
+            android:textAppearance="?textAppearanceOverline"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/priority"
-            android:textColor="#dfdfdf"
             android:id="@+id/priority_text"
-            tools:text="Priority : 3"
-            android:textAppearance="?textAppearanceOverline"
-
-            />
-
-        <com.google.android.material.slider.Slider
-            android:layout_margin="32dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="24dp"
+            android:text="@string/priority_label"
+            android:textColor="?iconKaTint"
             app:layout_constraintBottom_toTopOf="@id/time"
-            android:id="@+id/priority"
-            android:stepSize="1"
-            android:value="3"
-            android:valueFrom="1"
-            android:valueTo="5"
-            app:thumbColor="#dfdfdf"
-            app:trackColor="@color/teal_light"
             />
+
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/priority_text"
+            app:layout_constraintTop_toTopOf="@id/priority_text"
+            app:layout_constraintBottom_toBottomOf="@id/priority_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingHorizontal="16dp"
+            app:layout_constraintHorizontal_bias="0"
+            android:id="@+id/priority_container"
+            app:singleSelection="true"
+            app:checkedChip="@id/priority_low_chip"
+            >
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/high"
+                android:id="@+id/priority_high_chip"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/medium"
+                android:id="@+id/priority_medium_chip"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/low"
+                android:id="@+id/priority_low_chip"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                />
+
+        </com.google.android.material.chip.ChipGroup>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -134,7 +152,7 @@
             app:layout_constraintTop_toTopOf="@id/save_button"
             app:layout_constraintEnd_toStartOf="@id/save_button"
             android:layout_marginEnd="16dp"
-            app:tint="#dfdfdf"
+            app:tint="?iconKaTint"
             />
 
         <ImageView
@@ -146,7 +164,7 @@
             app:layout_constraintTop_toTopOf="@id/save_button"
             app:layout_constraintEnd_toStartOf="@id/color_palette"
             android:layout_marginEnd="16dp"
-            app:tint="#dfdfdf"
+            app:tint="?iconKaTint"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

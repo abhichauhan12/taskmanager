@@ -38,6 +38,7 @@
             tools:listitem="@layout/item_task"
             android:paddingBottom="86dp"
             android:clipToPadding="false"
+
             />
 
         <com.google.android.material.bottomappbar.BottomAppBar

@@ -19,5 +19,9 @@
     <string name="search_your_tasks">Search your tasks</string>
     <string name="theme">Theme</string>
     <string name="no_search_found_for_you_query">No search found for you query</string>
+    <string name="high">High</string>
+    <string name="medium">Medium</string>
+    <string name="low">Low</string>
+    <string name="priority_label">Priority :</string>
 
 </resources>
