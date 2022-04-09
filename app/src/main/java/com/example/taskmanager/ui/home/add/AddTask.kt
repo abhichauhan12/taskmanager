@@ -1,5 +1,11 @@
 package com.example.taskmanager.ui.home.add
 
+import android.app.AlarmManager
+import android.app.AlarmManager.RTC
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -9,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.taskmanager.R
 import com.example.taskmanager.data.database.entities.Task
 import com.example.taskmanager.databinding.FragmentAddTaskBinding
+import com.example.taskmanager.domain.receivers.DeadlineReceiver
 import com.example.taskmanager.ui.home.viewmodels.AddTaskViewModel
 import com.example.taskmanager.ui.home.viewmodels.UtilsViewModel
 import com.example.taskmanager.utils.*
@@ -112,6 +119,7 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
                     completed = false
                 )
 
+                scheduleAlarm(task = newTask)
                 addTaskViewModel.insertTaskInDatabase(newTask).also { navigateUp() }
             } else {
                 val updatedTask = Task(
@@ -125,11 +133,25 @@ class AddTask : Fragment(R.layout.fragment_add_task) {
                     completed = task.completed
                 )
 
+                scheduleAlarm(task = updatedTask)
                 addTaskViewModel.updateTask(updatedTask).also { navigateUp() }
             }
         } else {
             showToast("Title and Task can not be empty")
         }
+    }
+
+    private fun scheduleAlarm(task: Task) {
+        if (task.deadline == DEFAULT_DEADLINE) return
+
+        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(requireContext(), DeadlineReceiver::class.java).apply { putExtra(TASK, task) }
+        val pendingIntent = PendingIntent.getBroadcast(requireContext(), 0, intent, getPendingIntentFlag())
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            alarmManager.setAndAllowWhileIdle(RTC, getTimeForAlarm(task.deadline), pendingIntent)
+        else
+            alarmManager.set(RTC, task.deadline, pendingIntent)
     }
 
     override fun onStop() {
