@@ -46,21 +46,19 @@ class TaskScreen : Fragment(R.layout.fragment_task_screen) {
 
         binding.addTask.setOnClickListener { safeNavigate(R.id.action_task_to_add_task) }
 
-        binding.menuTaskFragment.setOnClickListener { safeNavigate(R.id.action_task_to_task_menu) }
+        binding.bottomAppBar.setNavigationOnClickListener { safeNavigate(R.id.action_task_to_task_menu) }
+
+        binding.bottomAppBar.setOnMenuItemClickListener {
+            if (it.itemId == R.id.theme) checkAndUpdateAppTheme()
+
+            true
+        }
 
         lifecycleScope.launch {
             taskViewModel.tasks.collect {
                 taskAdapter.submitList(it)
                 binding.emptyListText.visibility = if (it.isNullOrEmpty()) View.VISIBLE else View.GONE
             }
-        }
-
-        binding.toolBarTaskFragment.searchToolbar.setOnClickListener {
-            safeNavigate(R.id.action_task_to_search)
-        }
-
-        binding.toolBarTaskFragment.themeToolbar.setOnClickListener {
-            lifecycleScope.launchWhenStarted { checkAndUpdateAppTheme() }
         }
 
     }
@@ -78,14 +76,14 @@ class TaskScreen : Fragment(R.layout.fragment_task_screen) {
     }
 
     private fun initToolbar() {
-        binding.toolBarTaskFragment.titleToolbar.text= getString(R.string.tasks)
-        binding.toolBarTaskFragment.themeToolbar.apply {
 
-        if(utilsViewModel.theme.value == Theme.DARK.name){
-                setImageResource(R.drawable.ic_dark_mode)
-            }else{
-                setImageResource(R.drawable.ic_light_mode)
-            }
+        binding.toolBarTaskFragment.container.setOnClickListener {
+            safeNavigate(R.id.action_task_to_search)
         }
+
+        if (utilsViewModel.theme.value == Theme.DARK.name)
+            binding.bottomAppBar.replaceMenu(R.menu.task_screen_menu_night)
+        else
+            binding.bottomAppBar.replaceMenu(R.menu.task_screen_menu_light)
     }
 }

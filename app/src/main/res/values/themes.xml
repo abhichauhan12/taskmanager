@@ -11,6 +11,7 @@
 
         <item name="iconKaTint">@color/black</item>
         <item name="bottomSheetKaBackground">@color/white</item>
+        <item name="generalToolbarColor">@color/light_gray</item>
     </style>
 
 </resources>

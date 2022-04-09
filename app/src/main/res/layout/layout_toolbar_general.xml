@@ -1,67 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="?listPreferredItemHeight"
+        android:layout_height="wrap_content">
 
-        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="?listPreferredItemHeightSmall"
+            android:background="@drawable/general_toolbar_shape"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:id="@+id/container"
+            android:layout_marginHorizontal="16dp"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/search_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/search_your_tasks"
+                android:textAppearance="?textAppearanceBody1"
+                android:layout_marginHorizontal="8dp"
+                android:id="@+id/search_label"
+                />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="Title"
-            android:textAppearance="?textAppearanceHeadline6"
-            android:layout_marginStart="16dp"
-            android:id="@+id/title_toolbar"
-            />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/ic_search"
+                android:layout_marginStart="16dp"
+                android:id="@+id/search_icon"
+                app:tint="?iconKaTint"
+                android:background="?selectableItemBackgroundBorderless"
+                />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/ic_search"
-            android:layout_marginEnd="16dp"
-            android:id="@+id/search_toolbar"
-            app:tint="?iconKaTint"
-            android:background="?selectableItemBackgroundBorderless"
-            />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/ic_dark_mode"
-            android:layout_marginStart="16dp"
-            android:id="@+id/theme_toolbar"
-            app:tint="?iconKaTint"
-            android:background="?selectableItemBackgroundBorderless"
-            />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:background="?iconKaTint"
-            android:alpha="0.3"
-            />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 </layout>
