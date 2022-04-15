@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Task Manager</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="complete_task">Completed tasks</string>
     <string name="priority_task">Sort by Priority</string>
     <string name="deadlinetask">Sort by Deadline</string>
@@ -29,10 +27,6 @@
     <string name="enter_password">Enter Password</string>
     <string name="submit">submit</string>
     <string name="login">Login</string>
-    <string name="login">Login</string>
-    <string name="enter_email">Enter Email</string>
-    <string name="enter_password">Enter Password</string>
-    <string name="loginn">LogIn</string>
-    <string name="signupp">Signup</string>
+    <string name="otp">OTP</string>
 
 </resources>

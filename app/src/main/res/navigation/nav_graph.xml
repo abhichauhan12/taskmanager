@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_task_to_search"
             app:destination="@id/search" />
+        <action
+            android:id="@+id/action_task_to_login"
+            app:destination="@id/login" />
     </fragment>
 
     <fragment
@@ -86,5 +89,25 @@
         <action
             android:id="@+id/action_search_to_addTask"
             app:destination="@id/addTask" />
+    </fragment>
+    <fragment
+        android:id="@+id/login"
+        android:name="com.example.taskmanager.ui.home.auth.Login"
+        android:label="Login" >
+        <action
+            android:id="@+id/action_login_to_signup"
+            app:destination="@id/signup"
+            app:popUpTo="@id/login"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/signup"
+        android:name="com.example.taskmanager.ui.home.auth.Signup"
+        android:label="Signup" >
+        <action
+            android:id="@+id/action_signup_to_login"
+            app:destination="@id/login"
+            app:popUpTo="@id/signup"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

@@ -87,10 +87,8 @@ class TaskScreen : Fragment(R.layout.fragment_task_screen) {
 
         }else{
             // else, take him to the auth page
-
+            safeNavigate(R.id.action_task_to_login)
         }
-
-        showToast("$isUserLoggedIn")
     }
 
     private fun toggleStatusBarColor() {
