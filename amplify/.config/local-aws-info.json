@@ -1,0 +1,12 @@
+{
+  "dev": {
+    "configLevel": "project",
+    "useProfile": true,
+    "profileName": "Ankit"
+  },
+  "aws": {
+    "configLevel": "project",
+    "useProfile": true,
+    "profileName": "Ankit"
+  }
+}

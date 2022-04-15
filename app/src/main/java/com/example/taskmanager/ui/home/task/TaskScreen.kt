@@ -10,11 +10,13 @@ import androidx.lifecycle.lifecycleScope
 import com.example.taskmanager.R
 import com.example.taskmanager.databinding.FragmentTaskScreenBinding
 import com.example.taskmanager.ui.home.task.adapters.TaskAdapter
+import com.example.taskmanager.ui.home.viewmodels.AuthViewModel
 import com.example.taskmanager.ui.home.viewmodels.TaskViewModel
 import com.example.taskmanager.ui.home.viewmodels.UtilsViewModel
 import com.example.taskmanager.utils.BundleConstants.TASK
 import com.example.taskmanager.utils.Theme
 import com.example.taskmanager.utils.safeNavigate
+import com.example.taskmanager.utils.showToast
 import com.example.taskmanager.utils.statusBarColor
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -26,6 +28,7 @@ class TaskScreen : Fragment(R.layout.fragment_task_screen) {
     private lateinit var binding: FragmentTaskScreenBinding
     private val taskViewModel: TaskViewModel by viewModels()
     private val utilsViewModel: UtilsViewModel by viewModels()
+    private val authViewModel by viewModels<AuthViewModel>()
 
     private val taskAdapter: TaskAdapter by lazy {
         TaskAdapter(
@@ -42,7 +45,21 @@ class TaskScreen : Fragment(R.layout.fragment_task_screen) {
         binding.lifecycleOwner = this
 
         initToolbar()
+        initViews()
+        attachObservers()
+        toggleStatusBarColor()
+    }
 
+    private fun attachObservers() {
+        lifecycleScope.launch {
+            taskViewModel.tasks.collect {
+                taskAdapter.submitList(it)
+                binding.emptyListText.visibility = if (it.isNullOrEmpty()) View.VISIBLE else View.GONE
+            }
+        }
+    }
+
+    private fun initViews() {
         binding.taskRecyclerView.apply {
             adapter = taskAdapter
         }
@@ -57,14 +74,23 @@ class TaskScreen : Fragment(R.layout.fragment_task_screen) {
             true
         }
 
-        lifecycleScope.launch {
-            taskViewModel.tasks.collect {
-                taskAdapter.submitList(it)
-                binding.emptyListText.visibility = if (it.isNullOrEmpty()) View.VISIBLE else View.GONE
-            }
+        binding.toolBarTaskFragment.syncButton.setOnClickListener {
+            checkUserExistAndSync()
+        }
+    }
+
+    private fun checkUserExistAndSync() {
+        // Check if user exists
+        val isUserLoggedIn = authViewModel.isUserLoggedIn()
+        if (isUserLoggedIn) {
+            // if exists , then sync // later on
+
+        }else{
+            // else, take him to the auth page
+
         }
 
-        toggleStatusBarColor()
+        showToast("$isUserLoggedIn")
     }
 
     private fun toggleStatusBarColor() {

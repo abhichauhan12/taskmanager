@@ -1,0 +1,56 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-taskmanager-aws-210144-authRole",
+      "UnauthRoleArn": "arn:aws:iam::674582386389:role/amplify-taskmanager-aws-210144-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::674582386389:role/amplify-taskmanager-aws-210144-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-taskmanager-aws-210144-deployment",
+      "UnauthRoleName": "amplify-taskmanager-aws-210144-unauthRole",
+      "StackName": "amplify-taskmanager-aws-210144",
+      "StackId": "arn:aws:cloudformation:us-east-1:674582386389:stack/amplify-taskmanager-aws-210144/2a4ed940-bcd1-11ec-a169-0a56dfbd5323",
+      "AmplifyAppId": "dhomupawc0en6"
+    }
+  },
+  "auth": {
+    "taskmanager9f8aa77e": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "lastPushTimeStamp": "2022-04-15T15:41:04.342Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-taskmanager-aws-210144-deployment/amplify-cfn-templates/auth/taskmanager9f8aa77e-cloudformation-template.json",
+        "logicalId": "authtaskmanager9f8aa77e"
+      },
+      "output": {
+        "UserPoolId": "us-east-1_61XMAUroX",
+        "AppClientIDWeb": "4038q89iilgbp5u6k7h83sph0q",
+        "AppClientID": "1liabpjee033n87hepdn6gmk71",
+        "IdentityPoolId": "us-east-1:f8256128-7a6b-4108-9cec-c89570f16f5c",
+        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:674582386389:userpool/us-east-1_61XMAUroX",
+        "IdentityPoolName": "taskmanager9f8aa77e_identitypool_9f8aa77e__aws",
+        "UserPoolName": "taskmanager9f8aa77e_userpool_9f8aa77e"
+      },
+      "lastPushDirHash": "MEM8Fr3XFUUzMaD3DjmsHSPLeEg="
+    }
+  }
+}
