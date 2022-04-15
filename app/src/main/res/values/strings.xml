@@ -23,5 +23,16 @@
     <string name="medium">Medium</string>
     <string name="low">Low</string>
     <string name="priority_label">Priority :</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="submit">submit</string>
+    <string name="login">Login</string>
+    <string name="login">Login</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="loginn">LogIn</string>
+    <string name="signupp">Signup</string>
 
 </resources>
