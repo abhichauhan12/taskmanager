@@ -28,5 +28,6 @@
     <string name="submit">submit</string>
     <string name="login">Login</string>
     <string name="otp">OTP</string>
+    <string name="verify">Verify Otp</string>
 
 </resources>

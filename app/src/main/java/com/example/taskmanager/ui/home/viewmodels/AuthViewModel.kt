@@ -1,10 +1,11 @@
+@file:Suppress("unused")
+
 package com.example.taskmanager.ui.home.viewmodels
 
 import androidx.lifecycle.ViewModel
-import com.amplifyframework.auth.AuthUserAttributeKey
-import com.amplifyframework.auth.options.AuthSignUpOptions
-import com.amplifyframework.core.Amplify
 import com.example.taskmanager.domain.model.AuthStatus
+import com.example.taskmanager.domain.model.SignInStatus
+import com.example.taskmanager.domain.model.SignUpStatus
 import com.example.taskmanager.domain.model.User
 import com.example.taskmanager.domain.repo.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,19 +18,56 @@ class AuthViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    // first : status, second : error string
-    private val _authStatus = MutableStateFlow<Pair<AuthStatus?, String>>(null to "")
+    private val _signUpStatus = MutableStateFlow<SignUpStatus?>(null)
+    val signUpStatus = _signUpStatus.asStateFlow()
+
+    private val _signInStatus = MutableStateFlow<SignInStatus?>(null)
+    val signInStatus = _signInStatus.asStateFlow()
+
+    private val _authStatus = MutableStateFlow<AuthStatus?>(null)
     val authStatus = _authStatus.asStateFlow()
 
     fun isUserLoggedIn() = authRepository.getCurrentLoggedInUser() != null
 
-    fun signUp(user : User, onSuccess : () -> Unit, onFailure : (String) -> Unit) {
-        updateAuthStatus(AuthStatus.LOADING, "")
-        authRepository.signUp(user, onSuccess, onFailure)
+    fun isUserSignedIn() {
+        _authStatus.value = AuthStatus.CHECKING_SESSION
+        authRepository.getCurrentAuthSession { signedIn ->
+            _authStatus.value = if (signedIn) AuthStatus.USER_SIGNED_IN else AuthStatus.USER_NOT_SIGNED_IN
+        }
     }
 
-    fun updateAuthStatus(status: AuthStatus, errorString: String) {
-        _authStatus.value = status to errorString
+    fun signUp(user : User) {
+        updateSignUpStatus(SignUpStatus.SIGN_UP_STARTED)
+        authRepository.signUp(user, onSuccess = ::updateSignUpStatus, onFailure = ::updateSignUpStatus)
     }
 
+    fun login(user : User) {
+        updateSignInStatus(SignInStatus.SIGN_IN_STARTED)
+        authRepository.login(user, onSuccess = ::updateSignInStatus, onFailure = ::updateSignInStatus)
+    }
+
+    fun verifyOtp(user: User, code : String) {
+        updateSignUpStatus(SignUpStatus.VERIFY_STARTED)
+        authRepository.verifyOtp(user, code, onSuccess = ::updateSignUpStatus, onFailure = ::updateSignUpStatus)
+    }
+
+    private fun updateSignUpStatus(status: SignUpStatus) {
+        _signUpStatus.value = status
+    }
+
+    private fun updateSignUpStatus(status: SignUpStatus, error : String) {
+        _signUpStatus.value = status
+    }
+
+    private fun updateSignInStatus(status: SignInStatus) {
+        _signInStatus.value = status
+    }
+
+    private fun updateSignInStatus(status: SignInStatus, error : String) {
+        _signInStatus.value = status
+    }
+
+    fun resetAuthStatus() {
+        _authStatus.value = null
+    }
 }

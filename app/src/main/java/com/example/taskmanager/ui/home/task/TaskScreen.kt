@@ -6,9 +6,13 @@ import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.taskmanager.R
 import com.example.taskmanager.databinding.FragmentTaskScreenBinding
+import com.example.taskmanager.domain.model.AuthStatus
 import com.example.taskmanager.ui.home.task.adapters.TaskAdapter
 import com.example.taskmanager.ui.home.viewmodels.AuthViewModel
 import com.example.taskmanager.ui.home.viewmodels.TaskViewModel
@@ -52,9 +56,31 @@ class TaskScreen : Fragment(R.layout.fragment_task_screen) {
 
     private fun attachObservers() {
         lifecycleScope.launch {
-            taskViewModel.tasks.collect {
-                taskAdapter.submitList(it)
-                binding.emptyListText.visibility = if (it.isNullOrEmpty()) View.VISIBLE else View.GONE
+
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    taskViewModel.tasks.collect {
+                        taskAdapter.submitList(it)
+                        binding.emptyListText.visibility = if (it.isNullOrEmpty()) View.VISIBLE else View.GONE
+                    }
+                }
+
+                launch {
+                    authViewModel.authStatus.collect {
+                        it?.let {
+                            when(it) {
+                                AuthStatus.CHECKING_SESSION -> Unit
+                                AuthStatus.USER_SIGNED_IN -> showToast("already signed in")
+                                AuthStatus.USER_NOT_SIGNED_IN -> {
+                                    safeNavigate(R.id.action_task_to_login)
+                                    showToast("Kindly sign in to continue")
+                                }
+                            }
+
+                            authViewModel.resetAuthStatus()
+                        }
+                    }
+                }
             }
         }
     }
@@ -75,19 +101,7 @@ class TaskScreen : Fragment(R.layout.fragment_task_screen) {
         }
 
         binding.toolBarTaskFragment.syncButton.setOnClickListener {
-            checkUserExistAndSync()
-        }
-    }
-
-    private fun checkUserExistAndSync() {
-        // Check if user exists
-        val isUserLoggedIn = authViewModel.isUserLoggedIn()
-        if (isUserLoggedIn) {
-            // if exists , then sync // later on
-
-        }else{
-            // else, take him to the auth page
-            safeNavigate(R.id.action_task_to_login)
+            authViewModel.isUserSignedIn()
         }
     }
 

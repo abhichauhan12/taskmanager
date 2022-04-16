@@ -27,15 +27,15 @@
             app:layout_constraintTop_toBottomOf="@id/login_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:hint="@string/enter_email"
+            android:hint="@string/enter_username"
             android:padding="8dp"
-            android:id="@+id/email"
+            android:id="@+id/username"
             android:layout_marginTop="40dp" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/email"
+            app:layout_constraintTop_toBottomOf="@id/username"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:hint="@string/enter_password"

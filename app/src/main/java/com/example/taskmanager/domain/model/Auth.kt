@@ -7,7 +7,22 @@ data class User(
 )
 
 enum class AuthStatus {
-    LOADING,
-    SUCCESS,
-    FAILURE
+    CHECKING_SESSION,
+    USER_SIGNED_IN,
+    USER_NOT_SIGNED_IN
+}
+
+enum class SignUpStatus {
+    SIGN_UP_STARTED,
+    SIGN_UP_SUCCESS,
+    SIGN_UP_FAILURE,
+    VERIFY_STARTED,
+    VERIFY_SUCCESS,
+    VERIFY_FAILURE
+}
+
+enum class SignInStatus {
+    SIGN_IN_STARTED,
+    SIGN_IN_SUCCESS,
+    SIGN_IN_FAILURE
 }
