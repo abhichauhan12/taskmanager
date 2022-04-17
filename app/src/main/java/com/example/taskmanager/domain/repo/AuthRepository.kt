@@ -5,6 +5,7 @@ import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.auth.options.AuthSignUpOptions
 import com.amplifyframework.core.Amplify
 import com.example.taskmanager.domain.model.SignInStatus
+import com.example.taskmanager.domain.model.SignOutStatus
 import com.example.taskmanager.domain.model.SignUpStatus
 import com.example.taskmanager.domain.model.User
 import javax.inject.Inject
@@ -30,7 +31,7 @@ class AuthRepository @Inject constructor() {
             user.password,
             options,
             { onSuccess(SignUpStatus.SIGN_UP_SUCCESS) },
-            { exception -> onFailure(SignUpStatus.VERIFY_SUCCESS, exception.message ?: "Some error occurred") }
+            { exception -> onFailure(SignUpStatus.SIGN_UP_FAILURE, exception.message ?: "Some error occurred") }
         )
     }
 
@@ -49,6 +50,13 @@ class AuthRepository @Inject constructor() {
             user.username, code,
             { result -> if (result.isSignUpComplete) onSuccess(SignUpStatus.VERIFY_SUCCESS) else onFailure(SignUpStatus.VERIFY_FAILURE, "") },
             { onFailure(SignUpStatus.VERIFY_FAILURE, it.message ?: "Some error occurred") }
+        )
+    }
+
+    fun signOut(onSuccess : (SignOutStatus) -> Unit, onFailure : (SignOutStatus, String) -> Unit) {
+        Amplify.Auth.signOut(
+            {onSuccess(SignOutStatus.SIGNED_OUT)},
+            {onFailure(SignOutStatus.SIGN_OUT_FAILED, it.message ?: "Some error occurred")}
         )
     }
 }

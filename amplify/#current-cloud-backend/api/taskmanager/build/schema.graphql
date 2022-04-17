@@ -1,0 +1,186 @@
+
+type TaskData @aws_cognito_user_pools {
+  id: ID!
+  name: String!
+  description: String!
+  image: String
+  taskColor: Int!
+  priority: Int!
+  time: String
+  deadline: Int
+  completed: Boolean
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelTaskDataConnection @aws_cognito_user_pools {
+  items: [TaskData]!
+  nextToken: String
+}
+
+input ModelTaskDataFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  description: ModelStringInput
+  image: ModelStringInput
+  taskColor: ModelIntInput
+  priority: ModelIntInput
+  time: ModelStringInput
+  deadline: ModelIntInput
+  completed: ModelBooleanInput
+  and: [ModelTaskDataFilterInput]
+  or: [ModelTaskDataFilterInput]
+  not: ModelTaskDataFilterInput
+}
+
+type Query {
+  getTaskData(id: ID!): TaskData @aws_cognito_user_pools
+  listTaskData(filter: ModelTaskDataFilterInput, limit: Int, nextToken: String): ModelTaskDataConnection @aws_cognito_user_pools
+}
+
+input ModelTaskDataConditionInput {
+  name: ModelStringInput
+  description: ModelStringInput
+  image: ModelStringInput
+  taskColor: ModelIntInput
+  priority: ModelIntInput
+  time: ModelStringInput
+  deadline: ModelIntInput
+  completed: ModelBooleanInput
+  and: [ModelTaskDataConditionInput]
+  or: [ModelTaskDataConditionInput]
+  not: ModelTaskDataConditionInput
+}
+
+input CreateTaskDataInput {
+  id: ID
+  name: String!
+  description: String!
+  image: String
+  taskColor: Int!
+  priority: Int!
+  time: String
+  deadline: Int
+  completed: Boolean
+}
+
+input UpdateTaskDataInput {
+  id: ID!
+  name: String
+  description: String
+  image: String
+  taskColor: Int
+  priority: Int
+  time: String
+  deadline: Int
+  completed: Boolean
+}
+
+input DeleteTaskDataInput {
+  id: ID!
+}
+
+type Mutation {
+  createTaskData(input: CreateTaskDataInput!, condition: ModelTaskDataConditionInput): TaskData @aws_cognito_user_pools
+  updateTaskData(input: UpdateTaskDataInput!, condition: ModelTaskDataConditionInput): TaskData @aws_cognito_user_pools
+  deleteTaskData(input: DeleteTaskDataInput!, condition: ModelTaskDataConditionInput): TaskData @aws_cognito_user_pools
+}
+
+type Subscription {
+  onCreateTaskData(owner: String): TaskData @aws_subscribe(mutations: ["createTaskData"]) @aws_cognito_user_pools
+  onUpdateTaskData(owner: String): TaskData @aws_subscribe(mutations: ["updateTaskData"]) @aws_cognito_user_pools
+  onDeleteTaskData(owner: String): TaskData @aws_subscribe(mutations: ["deleteTaskData"]) @aws_cognito_user_pools
+}
+

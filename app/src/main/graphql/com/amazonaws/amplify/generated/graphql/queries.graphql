@@ -1,0 +1,40 @@
+# this is an auto generated file. This will be overwritten
+query GetTaskData($id: ID!) {
+  getTaskData(id: $id) {
+    id
+    name
+    description
+    image
+    taskColor
+    priority
+    time
+    deadline
+    completed
+    createdAt
+    updatedAt
+    owner
+  }
+}
+query ListTaskData(
+  $filter: ModelTaskDataFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listTaskData(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      description
+      image
+      taskColor
+      priority
+      time
+      deadline
+      completed
+      createdAt
+      updatedAt
+      owner
+    }
+    nextToken
+  }
+}

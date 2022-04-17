@@ -36,11 +36,6 @@
           "EMAIL"
         ]
       },
-      "lastPushTimeStamp": "2022-04-15T15:41:04.342Z",
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-taskmanager-aws-210144-deployment/amplify-cfn-templates/auth/taskmanager9f8aa77e-cloudformation-template.json",
-        "logicalId": "authtaskmanager9f8aa77e"
-      },
       "output": {
         "UserPoolId": "us-east-1_61XMAUroX",
         "AppClientIDWeb": "4038q89iilgbp5u6k7h83sph0q",
@@ -50,7 +45,53 @@
         "IdentityPoolName": "taskmanager9f8aa77e_identitypool_9f8aa77e__aws",
         "UserPoolName": "taskmanager9f8aa77e_userpool_9f8aa77e"
       },
-      "lastPushDirHash": "MEM8Fr3XFUUzMaD3DjmsHSPLeEg="
+      "lastPushTimeStamp": "2022-04-17T16:47:28.503Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-taskmanager-aws-210144-deployment/amplify-cfn-templates/auth/taskmanager9f8aa77e-cloudformation-template.json",
+        "logicalId": "authtaskmanager9f8aa77e"
+      }
+    }
+  },
+  "api": {
+    "taskmanager": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "taskmanager9f8aa77e",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ],
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7
+            }
+          },
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+              "userPoolConfig": {
+                "userPoolId": "authtaskmanager9f8aa77e"
+              }
+            }
+          ]
+        },
+        "GraphQLAPIIdOutput": "yt2xogjfi5c2bpzwx2spbwylau",
+        "GraphQLAPIEndpointOutput": "https://7zmni3urabb6vfniht3nxfemlu.appsync-api.us-east-1.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-lqeinidfg5eurbnzwajdahcjg4"
+      },
+      "lastPushTimeStamp": "2022-04-17T16:47:28.505Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-taskmanager-aws-210144-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apitaskmanager"
+      },
+      "lastPushDirHash": "JKJ2XJll7Z1Gm3stzLk8jtkQbGM="
     }
   }
 }

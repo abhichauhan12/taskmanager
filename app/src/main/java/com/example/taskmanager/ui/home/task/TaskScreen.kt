@@ -3,6 +3,7 @@ package com.example.taskmanager.ui.home.task
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,15 +14,13 @@ import androidx.navigation.fragment.findNavController
 import com.example.taskmanager.R
 import com.example.taskmanager.databinding.FragmentTaskScreenBinding
 import com.example.taskmanager.domain.model.AuthStatus
+import com.example.taskmanager.domain.model.SignOutStatus
 import com.example.taskmanager.ui.home.task.adapters.TaskAdapter
 import com.example.taskmanager.ui.home.viewmodels.AuthViewModel
 import com.example.taskmanager.ui.home.viewmodels.TaskViewModel
 import com.example.taskmanager.ui.home.viewmodels.UtilsViewModel
+import com.example.taskmanager.utils.*
 import com.example.taskmanager.utils.BundleConstants.TASK
-import com.example.taskmanager.utils.Theme
-import com.example.taskmanager.utils.safeNavigate
-import com.example.taskmanager.utils.showToast
-import com.example.taskmanager.utils.statusBarColor
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -33,6 +32,7 @@ class TaskScreen : Fragment(R.layout.fragment_task_screen) {
     private val taskViewModel: TaskViewModel by viewModels()
     private val utilsViewModel: UtilsViewModel by viewModels()
     private val authViewModel by viewModels<AuthViewModel>()
+    private lateinit var loader : AlertDialog
 
     private val taskAdapter: TaskAdapter by lazy {
         TaskAdapter(
@@ -69,15 +69,36 @@ class TaskScreen : Fragment(R.layout.fragment_task_screen) {
                     authViewModel.authStatus.collect {
                         it?.let {
                             when(it) {
-                                AuthStatus.CHECKING_SESSION -> Unit
-                                AuthStatus.USER_SIGNED_IN -> showToast("already signed in")
+                                AuthStatus.CHECKING_SESSION -> {
+                                    loader = loader("Syncing...")
+                                    loader.show()
+                                }
+                                AuthStatus.USER_SIGNED_IN -> showToast("already signed in").also { loader.dismiss() }
                                 AuthStatus.USER_NOT_SIGNED_IN -> {
+                                    loader.dismiss()
                                     safeNavigate(R.id.action_task_to_login)
                                     showToast("Kindly sign in to continue")
                                 }
                             }
 
                             authViewModel.resetAuthStatus()
+                        }
+                    }
+                }
+
+                launch {
+                    authViewModel.signOutStatus.collect {
+                        it?.let {
+                            when(it) {
+                                SignOutStatus.SIGNING_OUT -> {
+                                    loader = loader("Signing out...")
+                                    loader.show()
+                                }
+                                SignOutStatus.SIGNED_OUT -> showToast("Signed out successfully").also { loader.dismiss() }
+                                SignOutStatus.SIGN_OUT_FAILED -> showToast("Signed out failed").also { loader.dismiss() }
+                            }
+
+                            authViewModel.resetSignOutStatus()
                         }
                     }
                 }
@@ -96,6 +117,7 @@ class TaskScreen : Fragment(R.layout.fragment_task_screen) {
 
         binding.bottomAppBar.setOnMenuItemClickListener {
             if (it.itemId == R.id.theme) checkAndUpdateAppTheme()
+            else if (it.itemId == R.id.sign_out) signOutUser()
 
             true
         }
@@ -104,6 +126,8 @@ class TaskScreen : Fragment(R.layout.fragment_task_screen) {
             authViewModel.isUserSignedIn()
         }
     }
+
+    private fun signOutUser() { authViewModel.signOut() }
 
     private fun toggleStatusBarColor() {
         val theme = utilsViewModel.theme.value ?: return

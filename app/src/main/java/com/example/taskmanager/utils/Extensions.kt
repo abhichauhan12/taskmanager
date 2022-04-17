@@ -8,10 +8,13 @@ import android.os.Bundle
 import android.text.Spanned
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.taskmanager.databinding.LayoutLoaderBinding
 import io.noties.markwon.Markwon
 import io.noties.markwon.SoftBreakAddsNewLinePlugin
+
 
 fun Activity.statusBarColor(color : Int) {
     window.statusBarColor = color
@@ -41,4 +44,16 @@ fun Fragment.showToast(@StringRes msg : Int, long : Boolean = false) {
 
 fun String.getMarkDownText(context: Context): Spanned {
     return Markwon.builder(context).usePlugin(SoftBreakAddsNewLinePlugin.create()).build().toMarkdown(this)
+}
+
+fun Fragment.loader(msg : String): AlertDialog {
+    val builder = AlertDialog.Builder(requireContext()).apply {
+        val loaderBinding = LayoutLoaderBinding.inflate(layoutInflater).apply {
+            this.msg.text = msg
+        }
+        setView(loaderBinding.root)
+        setCancelable(false)
+    }
+
+    return builder.create()
 }

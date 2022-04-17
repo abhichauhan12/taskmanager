@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "taskmanager",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/Users/ankitgupta/Documents/taskmanager/amplify/backend/api/taskmanager/schema.graphql",
+    "defaultAuthType": {
+      "mode": "API_KEY",
+      "expirationTime": 7
+    },
+    "additionalAuthTypes": [
+      {
+        "mode": "AMAZON_COGNITO_USER_POOLS",
+        "cognitoUserPoolId": "authtaskmanager9f8aa77e"
+      }
+    ]
+  }
+}

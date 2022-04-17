@@ -29,5 +29,6 @@
     <string name="login">Login</string>
     <string name="otp">OTP</string>
     <string name="verify">Verify Otp</string>
+    <string name="sign_out">Sign out</string>
 
 </resources>

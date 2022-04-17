@@ -4,6 +4,7 @@ package com.example.taskmanager.ui
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import com.amplifyframework.api.aws.AWSApiPlugin
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin
 import com.amplifyframework.core.Amplify
 import com.example.taskmanager.domain.repo.AppRepository
@@ -30,6 +31,7 @@ class MainApplication : Application() {
 
     private fun initializeAmplify() {
         Amplify.addPlugin(AWSCognitoAuthPlugin())
+        Amplify.addPlugin(AWSApiPlugin())
         Amplify.configure(this)
     }
 

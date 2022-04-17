@@ -12,6 +12,12 @@ enum class AuthStatus {
     USER_NOT_SIGNED_IN
 }
 
+enum class SignOutStatus {
+    SIGNING_OUT,
+    SIGNED_OUT,
+    SIGN_OUT_FAILED
+}
+
 enum class SignUpStatus {
     SIGN_UP_STARTED,
     SIGN_UP_SUCCESS,

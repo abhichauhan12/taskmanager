@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f18b573dbe57130d1c43524e7976ec3e",
+    "identityHash": "c5a63f28599a9309e1361ea61905debc",
     "entities": [
       {
         "tableName": "tasks_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT NOT NULL, `tasks` TEXT NOT NULL, `priority` INTEGER NOT NULL, `task_color` INTEGER NOT NULL, `time_added` TEXT NOT NULL, `deadline` TEXT NOT NULL, `completed` INTEGER NOT NULL, `cheked` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT NOT NULL, `tasks` TEXT NOT NULL, `priority` INTEGER NOT NULL, `task_color` INTEGER NOT NULL, `time_added` TEXT NOT NULL, `deadline` INTEGER NOT NULL, `completed` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -47,18 +47,12 @@
           {
             "fieldPath": "deadline",
             "columnName": "deadline",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
             "fieldPath": "completed",
             "columnName": "completed",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "check",
-            "columnName": "cheked",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -76,7 +70,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f18b573dbe57130d1c43524e7976ec3e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c5a63f28599a9309e1361ea61905debc')"
     ]
   }
 }

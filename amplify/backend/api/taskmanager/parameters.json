@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "taskmanager",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authtaskmanager9f8aa77e",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

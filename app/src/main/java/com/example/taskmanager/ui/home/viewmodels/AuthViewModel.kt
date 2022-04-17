@@ -3,10 +3,7 @@
 package com.example.taskmanager.ui.home.viewmodels
 
 import androidx.lifecycle.ViewModel
-import com.example.taskmanager.domain.model.AuthStatus
-import com.example.taskmanager.domain.model.SignInStatus
-import com.example.taskmanager.domain.model.SignUpStatus
-import com.example.taskmanager.domain.model.User
+import com.example.taskmanager.domain.model.*
 import com.example.taskmanager.domain.repo.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,6 +20,9 @@ class AuthViewModel @Inject constructor(
 
     private val _signInStatus = MutableStateFlow<SignInStatus?>(null)
     val signInStatus = _signInStatus.asStateFlow()
+
+    private val _signOutStatus = MutableStateFlow<SignOutStatus?>(null)
+    val signOutStatus = _signOutStatus.asStateFlow()
 
     private val _authStatus = MutableStateFlow<AuthStatus?>(null)
     val authStatus = _authStatus.asStateFlow()
@@ -51,6 +51,11 @@ class AuthViewModel @Inject constructor(
         authRepository.verifyOtp(user, code, onSuccess = ::updateSignUpStatus, onFailure = ::updateSignUpStatus)
     }
 
+    fun signOut() {
+        updateSignOutStatus(SignOutStatus.SIGNING_OUT)
+        authRepository.signOut(onSuccess = ::updateSignOutStatus, onFailure = ::updateSignOutStatus)
+    }
+
     private fun updateSignUpStatus(status: SignUpStatus) {
         _signUpStatus.value = status
     }
@@ -67,7 +72,19 @@ class AuthViewModel @Inject constructor(
         _signInStatus.value = status
     }
 
+    private fun updateSignOutStatus(status: SignOutStatus) {
+        _signOutStatus.value = status
+    }
+
+    private fun updateSignOutStatus(status: SignOutStatus, error : String) {
+        _signOutStatus.value = status
+    }
+
     fun resetAuthStatus() {
         _authStatus.value = null
+    }
+
+    fun resetSignOutStatus() {
+        _signOutStatus.value = null
     }
 }

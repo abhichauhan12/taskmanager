@@ -8,4 +8,11 @@
         android:id="@+id/theme"
         app:iconTint="?iconKaTint"
         />
+    <item
+        android:title="@string/sign_out"
+        android:icon="@drawable/ic_sign_out"
+        app:showAsAction="always"
+        android:id="@+id/sign_out"
+        app:iconTint="?iconKaTint"
+        />
 </menu>
